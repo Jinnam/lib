@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sun.istack.internal.logging.Logger;
+
 @Repository
 public class LibDaoImple implements LibDao {
 	
@@ -43,9 +45,9 @@ public class LibDaoImple implements LibDao {
 
 	//입금 확인 후 입금상태 업데이트
 	@Override
-	public int updatePayMember(String MEMBERID) {
+	public int updatePayMember(String memberId) {
 		// TODO Auto-generated method stub
-		return sqlSession.update(NS+"memberPayUpdate", MEMBERID);
+		return sqlSession.update(NS+"memberPayUpdate", memberId);
 	}
 
 	//도서관 목록 가져오기
@@ -57,15 +59,63 @@ public class LibDaoImple implements LibDao {
 
 	//Admin정보 가져오기
 	@Override
-	public Admin selectAdmin(String ADMINID) {
+	public Admin selectAdmin(String adminId) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NS+"adminSelect",ADMINID);
+		return sqlSession.selectOne(NS+"adminSelect",adminId);
 	}
 	//rent 멤버 정보 가져오기
 	@Override
-	public Member rentMemberSelect(String MEMBERID) {
+	public Member rentMemberSelect(String memberId) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NS+"rentMemberSelect",MEMBERID);
+		return sqlSession.selectOne(NS+"rentMemberSelect",memberId);
+	}
+
+	//rent 도서 정보 가져오기
+	@Override
+	public Books rentBookSelect(int bookCode) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"rentBookSelect",bookCode);
+	}
+	//도서 폐기 등록
+	@Override
+	public int discardInsert(Books books) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NS+"discardInsert",books);
+	}
+	//도서 폐기 등록 후 도서상태 업데이트
+	@Override
+	public int bookStatusUpdate(int bookCode) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NS+"bookStatusUpdate",bookCode);
+	}
+
+	//회원/비회원 가격정보 가져오기
+	@Override
+	public Cost costSelect() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"paymentSelecet");
+	}
+
+	//대여정보 등록
+	@Override
+	public int rentalInsert(Rental rental) {
+		System.out.println("dao rental : "+rental);
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NS+"rentalInsert", rental);
+	}
+	
+	//결제정보 등록
+	@Override
+	public int paymentInsert(Payment payment) {
+		System.out.println("dao payment : "+payment);
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NS+"paymentInsert", payment);
+	}
+
+	@Override
+	public int rentalCodeSelect() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"rentalcodeSelect");
 	}
 	
 	

@@ -1,97 +1,133 @@
 package com.blog.beast4307.service;
 
 public class Books {
-	private int BOOKCODE;
-	private int LIBCODE;
-	private String BOOKNAME;
-	private String WRITER;
-	private String PUBLISHER;
-	private String CATEGORY;
-	private String GENRE;
-	private String BOOKLOCATION;
-	private String CURRENTSTATUS;
-	private String FIRSTRENTALDAY;
-	private int RENTALCOUNT;
-	private int RENTALDAYS;
-	public int getBOOKCODE() {
-		return BOOKCODE;
+	private int bookCode;
+	private int libCode;
+	private String bookName;
+	private String writer;
+	private String publisher;
+	private String category;
+	private String genre;
+	private String bookLocation;
+	private String currentStatus;
+	private String firstRentalDay;
+	private int rentalCount;
+	private int rentalDays;
+	private String rentalStartDay;
+	private String rentalFinishDay;
+	private String discardReason;
+	private String discardRegistrationDate;
+
+	
+	
+	
+	public String getDiscardRegistrationDate() {
+		return discardRegistrationDate;
 	}
-	public void setBOOKCODE(int bOOKCODE) {
-		BOOKCODE = bOOKCODE;
+	public void setDiscardRegistrationDate(String discardRegistrationDate) {
+		this.discardRegistrationDate = discardRegistrationDate;
 	}
-	public int getLIBCODE() {
-		return LIBCODE;
+	public String getDiscardReason() {
+		return discardReason;
 	}
-	public void setLIBCODE(int lIBCODE) {
-		LIBCODE = lIBCODE;
+	public void setDiscardReason(String discardReason) {
+		this.discardReason = discardReason;
 	}
-	public String getBOOKNAME() {
-		return BOOKNAME;
+	public String getRentalStartDay() {
+		return rentalStartDay;
 	}
-	public void setBOOKNAME(String bOOKNAME) {
-		BOOKNAME = bOOKNAME;
+	public void setRentalStartDay(String rentalStartDay) {
+		this.rentalStartDay = rentalStartDay;
 	}
-	public String getWRITER() {
-		return WRITER;
+	public String getRentalFinishDay() {
+		return rentalFinishDay;
 	}
-	public void setWRITER(String wRITER) {
-		WRITER = wRITER;
+	public void setRentalFinishDay(String rentalFinishDay) {
+		this.rentalFinishDay = rentalFinishDay;
 	}
-	public String getPUBLISHER() {
-		return PUBLISHER;
+	public int getBookCode() {
+		return bookCode;
 	}
-	public void setPUBLISHER(String pUBLISHER) {
-		PUBLISHER = pUBLISHER;
+	public void setBookCode(int bookCode) {
+		this.bookCode = bookCode;
 	}
-	public String getCATEGORY() {
-		return CATEGORY;
+	public int getLibCode() {
+		return libCode;
 	}
-	public void setCATEGORY(String cATEGORY) {
-		CATEGORY = cATEGORY;
+	public void setLibCode(int libCode) {
+		this.libCode = libCode;
 	}
-	public String getGENRE() {
-		return GENRE;
+	public String getBookName() {
+		return bookName;
 	}
-	public void setGENRE(String gENRE) {
-		GENRE = gENRE;
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
-	public String getBOOKLOCATION() {
-		return BOOKLOCATION;
+	public String getWriter() {
+		return writer;
 	}
-	public void setBOOKLOCATION(String bOOKLOCATION) {
-		BOOKLOCATION = bOOKLOCATION;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
-	public String getCURRENTSTATUS() {
-		return CURRENTSTATUS;
+	public String getPublisher() {
+		return publisher;
 	}
-	public void setCURRENTSTATUS(String cURRENTSTATUS) {
-		CURRENTSTATUS = cURRENTSTATUS;
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
 	}
-	public String getFIRSTRENTALDAY() {
-		return FIRSTRENTALDAY;
+	public String getCategory() {
+		return category;
 	}
-	public void setFIRSTRENTALDAY(String fIRSTRENTALDAY) {
-		FIRSTRENTALDAY = fIRSTRENTALDAY;
+	public void setCategory(String category) {
+		this.category = category;
 	}
-	public int getRENTALCOUNT() {
-		return RENTALCOUNT;
+	public String getGenre() {
+		return genre;
 	}
-	public void setRENTALCOUNT(int rENTALCOUNT) {
-		RENTALCOUNT = rENTALCOUNT;
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
-	public int getRENTALDAYS() {
-		return RENTALDAYS;
+	public String getBookLocation() {
+		return bookLocation;
 	}
-	public void setRENTALDAYS(int rENTALDAYS) {
-		RENTALDAYS = rENTALDAYS;
+	public void setBookLocation(String bookLocation) {
+		this.bookLocation = bookLocation;
+	}
+	public String getCurrentStatus() {
+		return currentStatus;
+	}
+	public void setCurrentStatus(String currentStatus) {
+		this.currentStatus = currentStatus;
+	}
+	public String getFirstRentalDay() {
+		return firstRentalDay;
+	}
+	public void setFirstRentalDay(String firstRentalDay) {
+		this.firstRentalDay = firstRentalDay;
+	}
+	public int getRentalCount() {
+		return rentalCount;
+	}
+	public void setRentalCount(int rentalCount) {
+		this.rentalCount = rentalCount;
+	}
+	public int getRentalDays() {
+		return rentalDays;
+	}
+	public void setRentalDays(int rentalDays) {
+		this.rentalDays = rentalDays;
 	}
 	@Override
 	public String toString() {
-		return "Books [BOOKCODE=" + BOOKCODE + ", LIBCODE=" + LIBCODE + ", BOOKNAME=" + BOOKNAME + ", WRITER=" + WRITER
-				+ ", PUBLISHER=" + PUBLISHER + ", CATEGORY=" + CATEGORY + ", GENRE=" + GENRE + ", BOOKLOCATION="
-				+ BOOKLOCATION + ", CURRENTSTATUS=" + CURRENTSTATUS + ", FIRSTRENTALDAY=" + FIRSTRENTALDAY
-				+ ", RENTALCOUNT=" + RENTALCOUNT + ", RENTALDAYS=" + RENTALDAYS + "]";
+		return "Books [bookCode=" + bookCode + ", libCode=" + libCode + ", bookName=" + bookName + ", writer=" + writer
+				+ ", publisher=" + publisher + ", category=" + category + ", genre=" + genre + ", bookLocation="
+				+ bookLocation + ", currentStatus=" + currentStatus + ", firstRentalDay=" + firstRentalDay
+				+ ", rentalCount=" + rentalCount + ", rentalDays=" + rentalDays + ", rentalStartDay=" + rentalStartDay
+				+ ", rentalFinishDay=" + rentalFinishDay + ", discardReason=" + discardReason
+				+ ", discardRegistrationDate=" + discardRegistrationDate + "]";
 	}
+	
+	
 	
 	
 }

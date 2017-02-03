@@ -15,15 +15,15 @@
                 <table>
                 	<tr>
                 		<td align="center">ID</td>
-                		<td><input type="text" name="ADMINID" style="color:black"/></td><br/>
+                		<td><input type="text" name="adminId" style="color:black"/></td>
                 	</tr>
                 	<tr>
                 		<td>PASSWORD</td>
-                		<td><input type="password" name="ADMINPW" style="color:black"/></td>
+                		<td><input type="password" name="adminPw" style="color:black"/></td>
                 	</tr>
                 	<tr>
                 		<td colspan="2" align="right">
-                		<button type="submit" btn btn-warning">LOGIN</button>
+                		<button type="submit" class="btn btn-warning">LOGIN</button>
                 		</td>
                 	</tr>
                 </table>

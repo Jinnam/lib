@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.blog.beast4307.service.Admin;
 import com.blog.beast4307.service.Books;
+import com.blog.beast4307.service.Cost;
 import com.blog.beast4307.service.Lib;
 import com.blog.beast4307.service.LibService;
 import com.blog.beast4307.service.Member;
+import com.blog.beast4307.service.ReceiveRentData;
 
 @Controller
 public class LibController {
@@ -36,18 +38,37 @@ public class LibController {
 	
 	//도서 대여 액션
 	@RequestMapping(value="/rentbook", method=RequestMethod.POST)
-	public String rentBook(Books books){
-		
-		return "redirect:RentBook";
+	public String rentBook(ReceiveRentData receiveRentData){
+		logger.info(receiveRentData.toString());
+		libService.rentalInsert(receiveRentData);
+		libService.paymentInsert(receiveRentData);
+		libService.bookStatusUpdate(receiveRentData.getBookCode());
+		return "redirect:rentbook";
+	}
+	//rent 도서 정보 조회
+	@RequestMapping(value="/selectbook", method=RequestMethod.POST)
+	public @ResponseBody Books selectRentBook(@RequestParam("bookCode") int bookCode){
+		logger.info("select book");
+		Books returnBook = libService.rentBookSelect(bookCode);
+		logger.info(returnBook.toString());
+		return returnBook;
 	}
 	
 	//rent 멤버 정보 조회
 	@RequestMapping(value="/rentmember", method=RequestMethod.POST)
-	public @ResponseBody Member selectRentMember(@RequestParam("MEMBERID") String MEMBERID){
-		System.out.println(MEMBERID+"**********************************");
-		Member returnMember = libService.rentMemberSelect(MEMBERID);
+	public @ResponseBody Member selectRentMember(@RequestParam("memberId") String memberId){
+		logger.info("rentmember");
+		Member returnMember = libService.rentMemberSelect(memberId);
 		logger.info(returnMember.toString());
 		return returnMember;
+	}
+	
+	//회원/비회원 가격정보 가져오기
+	@RequestMapping(value="/costselect", method=RequestMethod.POST)
+	public @ResponseBody Cost costSelect(){
+		logger.info("costselect");
+		Cost returnCost = libService.costSelect();
+		return returnCost;
 	}
 	//도서 반납 폼 이동
 	@RequestMapping(value="/returnbook")
@@ -64,14 +85,19 @@ public class LibController {
 	//도서폐기 폼 이동
 	@RequestMapping(value="/deletebook")
 	public String deleteBook(){
+		logger.info("delete form");
 		return "DeleteBook";
 	}
 		
 	//도서 폐기 액션
 	@RequestMapping(value="/deletebook", method=RequestMethod.POST)
 	public String deleteBook(Books books){
-			
-		return "redirect:DeleteBook";
+		logger.info("delete process");
+		logger.info("books tostring: "+books.toString());
+		int bookCode = books.getBookCode();
+		libService.discardInsert(books);	//도서 폐기 등록
+		libService.bookStatusUpdate(bookCode);	//도서 상태 N을 업데이트
+		return "redirect:deletebook";
 	}
 	
 	//회원 목록 가져오기(회비 안낸 회원)
@@ -84,8 +110,8 @@ public class LibController {
 	}
 	//회원 목록 업데이트(회비 냄)
 	@RequestMapping(value="/approval", method=RequestMethod.POST)
-	public String updatePayMember(@RequestParam(value="MEMBERID") String[] MEMBERID){
-		libService.updatePayMember(MEMBERID);
+	public String updatePayMember(@RequestParam(value="memberId") String[] memberId){
+		libService.updatePayMember(memberId);
 		return "redirect:approval";
 	}
 	
@@ -121,16 +147,18 @@ public class LibController {
 	//로그인 액션
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(Admin admin, HttpSession session){
+		logger.info(admin.toString());
 		String result="";
 		Admin resultAdmin = libService.selectAdmin(admin);
+		logger.info(resultAdmin.toString());
 		//리턴값 1: 성공, 2: 비번불일치, 3: 아이디 불일치
-		if(resultAdmin.getRESULT()==1){
-			session.setAttribute("ADMINID", resultAdmin.getADMINID());
-			session.setAttribute("LIBCODE", resultAdmin.getLIBCODE());
-			session.setAttribute("COMMENT", resultAdmin.getRESULT());
+		if(resultAdmin.getResult()==1){
+			session.setAttribute("adminId", resultAdmin.getAdminId());
+			session.setAttribute("libCode", resultAdmin.getLibCode());
+			session.setAttribute("result", resultAdmin.getResult());
 			result="AddLibrary";
 		}else{
-			result="login";
+			result="redirect:login";
 		}
 		return result;
 

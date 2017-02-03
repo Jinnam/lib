@@ -8,8 +8,20 @@ import org.slf4j.LoggerFactory;
 public interface LibService {
 	static final Logger logger = LoggerFactory.getLogger(LibService.class);
 	
+	//대여정보 등록
+	int rentalInsert(ReceiveRentData receiveRentData);
+	//결제정보 등록
+	int paymentInsert(ReceiveRentData receiveRentData);
+	//결제정보(금액)가져오기
+	Cost costSelect();
+	//도서 폐기 등록
+	int discardInsert(Books books);
+	//도서폐기 후 도서 상태 업데이트
+	int bookStatusUpdate(int bookCode);
+	//rent 도서정보 가져오기
+	Books rentBookSelect(int bookCode);
 	//rent 회원정보 가져오기
-	Member rentMemberSelect(String MEMBERID);
+	Member rentMemberSelect(String memberId);
 	//Admin정보 가져오기 && 아이디 비번체크
 	Admin selectAdmin(Admin admin);
 	//회원가입
@@ -21,7 +33,7 @@ public interface LibService {
 	//회원 목록
 	List<Member> selectMember();
 	//회원 목록 업데이트(회비 냄)
-	int updatePayMember(String[] MEMBERID);
+	int updatePayMember(String[] memberId);
 	//도서관 목록 가져오기
 	List<Lib> selectLibrary();
 }

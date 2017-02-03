@@ -3,17 +3,125 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.blog.beast4307.service.LibMapper">
-
-	<!-- 회원정보  -->
 	
+	<!-- 대여정보 등록 -->
+	<insert id="rentalInsert" parameterType="com.blog.beast4307.service.Rental">
+		INSERT INTO
+			rental(
+				BOOKCODE,
+				MEMBERID,
+				RENTALSTARTDAY,
+				RETURNEXPECTDAY,
+				RETURNDAY,
+				RETURNSTATUS
+			)VALUES(
+				#{bookCode},
+				#{memberId},
+				#{rentalStartDay},
+				#{returnExpectDay},
+				#{returnDay},
+				#{returnStatus}
+				)
+	</insert>
+	
+	<!-- 대여코드 가져오기 -->
+	<select id="rentalcodeSelect" resultType="int">
+		SELECT
+			RENTALCODE
+		FROM
+			rental
+	</select>
+	<!-- 결제정보가져오기 -->
+	<select id="paymentSelect" resultType="com.blog.beast4307.service.Payment">
+		SELECT
+			PAYMENTCODE,
+			RENTALCODE,
+			MEMBERID,
+			PAYMENTDAY,
+			PAYMENTPRICE,
+			PAYMENTSTATUS
+		FROM
+			payment
+		WHERE 
+	</select>
+	
+	<!-- 결제정보 등록 -->
+	<insert id="paymentInsert" parameterType="com.blog.beast4307.service.Payment">
+		INSERT INTO
+			payment(
+				RENTALCODE,
+				MEMBERID,
+				PAYMENTDAY,
+				PAYMENTPRICE,
+				PAYMENTSTATUS
+			)VALUES(
+				#{rentalCode},
+				#{memberId},
+				CURDATE(),
+				#{paymentPrice},
+				#{paymentStatus}
+			)
+	</insert>
+
+
+	<!-- 결제가격 가져오기 -->
+	<select id="paymentSelecet" resultType="com.blog.beast4307.service.Cost">
+		SELECT 
+			MEMBERRENTALCOST,
+			NONMEMBERRENTALCOST
+		FROM
+			cost
+	</select>
+
+	<!-- 도서폐기 등록 -->
+	<insert id="discardInsert" parameterType="com.blog.beast4307.service.Books">
+		INSERT INTO
+			discardbooks(
+				BOOKCODE,
+				DISCARDREASON,
+				DISCARDREGISTRATIONDATE
+			)VALUES(
+				#{bookCode},
+				#{discardReason},
+				CURDATE()
+			)
+	</insert>
+	
+	<!-- 도서폐기 등록 후 도서상태 업데이트 -->
+	<update id="bookStatusUpdate" parameterType="int">
+		UPDATE
+			books
+		SET
+			CURRENTSTATUS="N"
+		WHERE
+			BOOKCODE=#{bookCode}
+	</update>
+	
+	<!-- 대여 : 회원정보 가져오기  -->
 	<select id="rentMemberSelect" parameterType="String" resultType="com.blog.beast4307.service.Member">
 		SELECT 
 			MEMBERNAME, 
-			MEMBERPHONE 
+			MEMBERPHONE,
+			MEMBERPAYMENTSTATUS
 		FROM 
 			member
 		WHERE
-			MEMBERID=#{MEMBERID}
+			MEMBERID=#{memberId}
+	</select>
+	
+	<!-- 대여 : 도서정보 가져오기 -->
+	<select id="rentBookSelect" parameterType="int" resultType="com.blog.beast4307.service.Books">
+		SELECT
+			BOOKNAME,
+			WRITER,
+			PUBLISHER,
+			CATEGORY,
+			GENRE,
+			BOOKLOCATION
+		FROM
+			books
+		WHERE
+			BOOKCODE=#{bookCode}
 	</select>
 
 	<!-- Admin 정보 가져오기 -->
@@ -25,7 +133,7 @@
 		FROM
 			admin
 		WHERE
-			ADMINID=#{ADMINID}
+			ADMINID=#{adminId}
 	</select>
 	
 	
@@ -49,7 +157,7 @@
 		SET
 			MEMBERPAYMENTSTATUS='Y'
 		WHERE
-			MEMBERID=#{MEMBERID}
+			MEMBERID=#{memberId}
 	</update>
 	
 	<!-- 회원가입시 도서관 목록 가져오기 -->
@@ -74,15 +182,15 @@
 			LIBCODE,
 			MEMBERPAYMENTSTATUS
  		)VALUES(
-	 		#{MEMBERID},
-	 		#{MEMBERPW},
-	 		#{MEMBERNAME},
-	 		#{MEMBERBIRTHDAY},
-	 		#{MEMBERPHONE},
-	 		#{MEMBERADDR},
+	 		#{memberId},
+	 		#{memberPw},
+	 		#{memberName},
+	 		#{memberBirthDay},
+	 		#{memberPhone},
+	 		#{memberAddr},
 	 		CURDATE(),
-	 		#{LIBCODE},
-	 		#{MEMBERPAYMENTSTATUS}
+	 		#{libCode},
+	 		#{memberPaymentStatus}
  		)
  	</insert>
  	<!-- 도서관 등록 -->
@@ -91,8 +199,8 @@
 			LIBNAME,
 			LIBLOCATION
 		)VALUES(
-			#{LIBNAME},
-			#{LIBLOCATION}
+			#{libName},
+			#{libLocation}
 		)
  	</insert>
  	
@@ -110,16 +218,16 @@
 			RENTALCOUNT,
 			RENTALDAYS
 		)VALUES(
-			#{LIBCODE},
-			#{BOOKNAME},
-			#{WRITER},
-			#{PUBLISHER},
-			#{CATEGORY},
-			#{GENRE},
-			#{BOOKLOCATION},
-			#{CURRENTSTATUS},
-			#{RENTALCOUNT},
-			#{RENTALDAYS}			
+			#{libCode},
+			#{bookName},
+			#{writer},
+			#{publisher},
+			#{category},
+			#{genre},
+			#{bookLocation},
+			#{currentStatus},
+			#{rentalCount},
+			#{rentalDays}			
 		)
 
 	</insert> 	
@@ -133,7 +241,7 @@
  		FROM 
  			member
  		WHERE
- 			MEMBERID=#{ID} 
+ 			MEMBERID=#{memberId} 
  	</select>
  	
 </mapper>

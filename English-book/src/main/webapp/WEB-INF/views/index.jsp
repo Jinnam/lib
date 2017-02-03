@@ -34,38 +34,37 @@
 				<tr>
 					<td>도서관</td>
 					
-					<td><select name="LIBCODE">
-						<option value="">도서관을 선택하세요.</option>
+					<td><select name="libCode">
 						<c:forEach var="library" items="${library}">
-							<option value="${library.LIBCODE}">${library.LIBNAME}</option>
+							<option value="${library.libCode}">${library.libName}</option>
 						</c:forEach>
 					</select>  </td>
 				</tr>
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" name="MEMBERID"/>
+					<td><input type="text" name="memberId"/>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="MEMBERPW"/></td>
+					<td><input type="password" name="memberPw"/></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="MEMBERNAME"/></td>
+					<td><input type="text" name="memberName"/></td>
 				</tr>
 				<tr>
 					<td>생년월일</td>
-					<td><input type="text" name="MEMBERBIRTHDAY"/></td>
+					<td><input type="text" name="memberBirthDay"/></td>
 				</tr>
 				<tr>
 					<td>전화번호</td>
-					<td><input type="text" size="3" maxlength="3" name="PHONE1"/>-
-					<input type="text" size="4" maxlength="4" name="PHONE2"/>-
-					<input type="text" size="4" maxlength="4" name="PHONE3"/></td>
+					<td><input type="text" size="3" maxlength="3" name="phone1"/>-
+					<input type="text" size="4" maxlength="4" name="Phone2"/>-
+					<input type="text" size="4" maxlength="4" name="Phone3"/></td>
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="text" name="MEMBERADDR"/>
+					<td><input type="text" name="memberAddr"/>
 					</td>
 				</tr>
 				<tr>

@@ -13,7 +13,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
-	<link href="/resources/css.css" rel="stylesheet" type="text/css" >
+	<link href="/resources/admincss.css" rel="stylesheet" type="text/css" >
 </head>
 <body>
 <!-- Navbar -->
@@ -64,7 +64,7 @@
 							<li><a href="/approval">È¸ºñ³³ºÎ</a></li>
 					    </ul>
 				</li>
-				<li><a href="/logout">${ADMINID} ·Î±×¾Æ¿ô</a></li>
+				<li><a href="/logout">${adminId} ·Î±×¾Æ¿ô</a></li>
 			</ul>
 		</div>
 	</div>

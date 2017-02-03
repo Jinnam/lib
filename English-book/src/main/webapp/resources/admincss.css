@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 		body {
-			font: 20px Montserrat, sans-serif;
+			font: 15px Montserrat, sans-serif;
 			line-height: 1.8;
 			color: #f5f6f7;
 		}
@@ -39,15 +39,3 @@
 		.navbar-nav  li a:hover {
 			color: #1abc9c !important;
 		}
-		/* Set black background color, white text and some padding */
-	    footer {
-	      background-color: #555;
-	      color: white;
-	      padding: 15px;
-	      position:absolute;
-	      clear:left;
-	      width:1680px;
-	      float:left;
-	      left:0;
-	      bottom:0px;
-	    }

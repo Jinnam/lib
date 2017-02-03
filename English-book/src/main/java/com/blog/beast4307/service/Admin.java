@@ -1,44 +1,39 @@
 package com.blog.beast4307.service;
 
 public class Admin {
-	private String ADMINID;
-	private String ADMINPW;
-	private int LIBCODE;
-	private int RESULT;
-	
-	
-
-	public int getRESULT() {
-		return RESULT;
+	private String adminId;
+	private String adminPw;
+	private int libCode;
+	private int result;
+	public String getAdminId() {
+		return adminId;
 	}
-	public void setRESULT(int rESULT) {
-		RESULT = rESULT;
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
 	}
-	public String getADMINID() {
-		return ADMINID;
+	public String getAdminPw() {
+		return adminPw;
 	}
-	public void setADMINID(String aDMINID) {
-		ADMINID = aDMINID;
+	public void setAdminPw(String adminPw) {
+		this.adminPw = adminPw;
 	}
-	public String getADMINPW() {
-		return ADMINPW;
+	public int getLibCode() {
+		return libCode;
 	}
-	public void setADMINPW(String aDMINPW) {
-		ADMINPW = aDMINPW;
+	public void setLibCode(int libCode) {
+		this.libCode = libCode;
 	}
-	public int getLIBCODE() {
-		return LIBCODE;
+	public int getResult() {
+		return result;
 	}
-	public void setLIBCODE(int lIBCODE) {
-		LIBCODE = lIBCODE;
+	public void setResult(int result) {
+		this.result = result;
 	}
 	@Override
 	public String toString() {
-		return "Admin [ADMINID=" + ADMINID + ", ADMINPW=" + ADMINPW + ", LIBCODE=" + LIBCODE + ", RESULT=" + RESULT
+		return "Admin [adminId=" + adminId + ", adminPw=" + adminPw + ", libCode=" + libCode + ", result=" + result
 				+ "]";
 	}
-	
-	
 	
 	
 }
