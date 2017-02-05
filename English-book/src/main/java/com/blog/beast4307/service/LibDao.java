@@ -3,8 +3,6 @@ package com.blog.beast4307.service;
 import java.util.List;
 
 public interface LibDao {
-	//rentalCode 가져오기
-	int rentalCodeSelect();
 	//대여정보 등록
 	int rentalInsert(Rental rental);
 	//결제정보 등록

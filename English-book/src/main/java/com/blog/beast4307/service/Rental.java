@@ -1,18 +1,19 @@
 package com.blog.beast4307.service;
 
 public class Rental {
-	private int retalCode;
+	private int rentalCode;
 	private int bookCode;
 	private String memberId;
 	private String rentalStartDay;
 	private String returnExpectDay;
 	private String returnDay;
 	private String returnStatus;
-	public int getRetalCode() {
-		return retalCode;
+	
+	public int getRentalCode() {
+		return rentalCode;
 	}
-	public void setRetalCode(int retalCode) {
-		this.retalCode = retalCode;
+	public void setRentalCode(int rentalCode) {
+		this.rentalCode = rentalCode;
 	}
 	public int getBookCode() {
 		return bookCode;
@@ -52,7 +53,7 @@ public class Rental {
 	}
 	@Override
 	public String toString() {
-		return "Rental [retalCode=" + retalCode + ", bookCode=" + bookCode + ", memberId=" + memberId
+		return "Rental [rentalCode=" + rentalCode + ", bookCode=" + bookCode + ", memberId=" + memberId
 				+ ", rentalStartDay=" + rentalStartDay + ", returnExpectDay=" + returnExpectDay + ", returnDay="
 				+ returnDay + ", returnStatus=" + returnStatus + "]";
 	}

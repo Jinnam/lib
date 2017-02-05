@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.blog.beast4307.service.Rental;
 import com.blog.beast4307.service.Admin;
 import com.blog.beast4307.service.Books;
 import com.blog.beast4307.service.Cost;
@@ -40,9 +41,12 @@ public class LibController {
 	@RequestMapping(value="/rentbook", method=RequestMethod.POST)
 	public String rentBook(ReceiveRentData receiveRentData){
 		logger.info(receiveRentData.toString());
+		//대여 등록
 		libService.rentalInsert(receiveRentData);
+		//결제 등록
 		libService.paymentInsert(receiveRentData);
-		libService.bookStatusUpdate(receiveRentData.getBookCode());
+		//도서 상태 업데이트(Y->N)
+		//libService.bookStatusUpdate(receiveRentData.getBookCode());
 		return "redirect:rentbook";
 	}
 	//rent 도서 정보 조회

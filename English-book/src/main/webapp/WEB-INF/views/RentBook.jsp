@@ -89,7 +89,12 @@
 					</tr>
 					<tr>
 						<td>받은금액</td>
-						<td><input type="text" name="paymentPrice" id="paymentPrice" />원</td>
+						<td>
+							<select name="paymentPrice">
+								<option value="0">0</option>
+								<option id="paymentPrice"></option>
+							</select>원
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2"></td>
@@ -155,9 +160,13 @@ $(document).ready(function(){
 				var memberRentalCost = data.memberRentalCost;
 				var nonMemberRentalCost = data.nonMemberRentalCost;
 				if($('#memberPaymentStatus').val()=="유료회원"){
-					$('#totalPrice').val(memberRentalCost)
+					$('#totalPrice').val(memberRentalCost);
+					$('#paymentPrice').val=data.memberRentalCost;
+					$("#paymentPrice").html(data.memberRentalCost);
 				}else{
-					$('#totalPrice').val(nonMemberRentalCost)
+					$('#totalPrice').val(nonMemberRentalCost);
+					$('#paymentPrice').val=data.nonMemberRentalCost;
+					$("#paymentPrice").html(data.nonMemberRentalCost);
 				}
 				
     	   }

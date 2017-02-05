@@ -164,16 +164,17 @@ public class LibServiceImple implements LibService {
 		return dao.costSelect();
 	}
 
+	Rental rental= new Rental();
 	//대여정보 등록
 	@Override
 	public int rentalInsert(ReceiveRentData receiveRentData) {
-		Rental rental= new Rental();
+		
 		rental.setBookCode(receiveRentData.getBookCode());
 		rental.setMemberId(receiveRentData.getMemberId());
 		rental.setRentalStartDay(receiveRentData.getRentalStartDay());
 		rental.setReturnExpectDay(receiveRentData.getRentalFinishDay());
 		rental.setReturnStatus("N");
-		logger.info("rental"+rental.toString());
+		logger.info("rental : "+rental.toString());
 		return dao.rentalInsert(rental);
 	}
 
@@ -188,8 +189,8 @@ public class LibServiceImple implements LibService {
 		}else{
 			payment.setPaymentStatus("Y");
 		}
-//		payment.setRentalCode(dao.rentalCodeSelect());
-		logger.info("payment"+payment.toString());
+		payment.setRentalCode(rental.getRentalCode());
+		logger.info("payment : "+payment.toString());
 		return dao.paymentInsert(payment);
 	}
 

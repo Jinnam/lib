@@ -5,7 +5,7 @@
 <mapper namespace="com.blog.beast4307.service.LibMapper">
 	
 	<!-- 대여정보 등록 -->
-	<insert id="rentalInsert" parameterType="com.blog.beast4307.service.Rental">
+	<insert id="rentalInsert" parameterType="com.blog.beast4307.service.Rental" useGeneratedKeys="true" keyProperty="rentalCode">
 		INSERT INTO
 			rental(
 				BOOKCODE,
@@ -23,28 +23,6 @@
 				#{returnStatus}
 				)
 	</insert>
-	
-	<!-- 대여코드 가져오기 -->
-	<select id="rentalcodeSelect" resultType="int">
-		SELECT
-			RENTALCODE
-		FROM
-			rental
-	</select>
-	<!-- 결제정보가져오기 -->
-	<select id="paymentSelect" resultType="com.blog.beast4307.service.Payment">
-		SELECT
-			PAYMENTCODE,
-			RENTALCODE,
-			MEMBERID,
-			PAYMENTDAY,
-			PAYMENTPRICE,
-			PAYMENTSTATUS
-		FROM
-			payment
-		WHERE 
-	</select>
-	
 	<!-- 결제정보 등록 -->
 	<insert id="paymentInsert" parameterType="com.blog.beast4307.service.Payment">
 		INSERT INTO

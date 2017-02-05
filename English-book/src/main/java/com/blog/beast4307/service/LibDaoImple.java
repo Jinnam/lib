@@ -100,8 +100,8 @@ public class LibDaoImple implements LibDao {
 	@Override
 	public int rentalInsert(Rental rental) {
 		System.out.println("dao rental : "+rental);
-		// TODO Auto-generated method stub
-		return sqlSession.insert(NS+"rentalInsert", rental);
+		int result = sqlSession.insert(NS+"rentalInsert", rental);
+		return result;
 	}
 	
 	//결제정보 등록
@@ -110,12 +110,6 @@ public class LibDaoImple implements LibDao {
 		System.out.println("dao payment : "+payment);
 		// TODO Auto-generated method stub
 		return sqlSession.insert(NS+"paymentInsert", payment);
-	}
-
-	@Override
-	public int rentalCodeSelect() {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NS+"rentalcodeSelect");
 	}
 	
 	
