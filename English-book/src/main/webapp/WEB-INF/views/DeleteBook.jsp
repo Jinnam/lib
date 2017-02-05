@@ -82,7 +82,10 @@ $(document).ready(function(){
 				$('#genre').val(data.genre);
 				$('#bookLocation').val(data.bookLocation);
 				$('#libCode').val(${libCode});
-			}
+			},
+			error : function(request,status,error){
+    	        alert("code:"+request.status+"\n"+"error: 책 정보가 없습니다. \n"+error);
+    	       }
 			
 		});		
 		

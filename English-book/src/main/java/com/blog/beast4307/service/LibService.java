@@ -1,5 +1,6 @@
 package com.blog.beast4307.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,7 +8,14 @@ import org.slf4j.LoggerFactory;
 
 public interface LibService {
 	static final Logger logger = LoggerFactory.getLogger(LibService.class);
-	
+	//결재후 books 업데이트
+	int returnBookUpdate(ReceiveRentData receiveRentData);	
+	//결재 후 payment/rental 업데이트 
+	int payRentUpdate(int paymentCode);
+	//반납 결제정보가져오기
+	Payment returnPaymentSelect(int bookCode);	
+	//반납 도서정보가져오기
+	Books returnBookSelect(int bookCode) throws ParseException;
 	//대여정보 등록
 	int rentalInsert(ReceiveRentData receiveRentData);
 	//결제정보 등록

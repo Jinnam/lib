@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 </head>
@@ -9,7 +9,7 @@
 
 	<div style="height:200px"></div>
 	
-
+<center>
 	<div class="panel panel-default" style="width:60%" >
 		<div class="panel-heading" style="background-color:#2F2F2F;color:white" align="center">도서 등록</div>
 		<div class="panel-body" align="center">
@@ -52,7 +52,7 @@
 			
 		</div>
 	</div>
-
+</center>
 	
 	<div style="height:100px"></div>
 	

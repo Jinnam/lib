@@ -2,7 +2,21 @@ package com.blog.beast4307.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public interface LibDao {
+	static final Logger logger = LoggerFactory.getLogger(LibDao.class);
+	//결재후 books 업데이트
+	int returnBookUpdate(Books books);	
+	//FIRSTRENTALDAY가져오기
+	Books firstRentalSelect(int bookCode);
+	//결재 후 payment/rental 업데이트 
+	int payRentUpdate(int paymentCode);
+	//반납 결제정보가져오기
+	Payment returnPaymentSelect(int bookCode);	
+	//반납 도서정보가져오기
+	Books returnBookSelect(int bookCode);
 	//대여정보 등록
 	int rentalInsert(Rental rental);
 	//결제정보 등록

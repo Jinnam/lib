@@ -1,6 +1,9 @@
 package com.blog.beast4307.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -137,9 +140,9 @@ public class LibServiceImple implements LibService {
 			nYear = calendar.get(Calendar.YEAR);
 			nMonth = calendar.get(Calendar.MONTH) + 1;
 			nDay = calendar.get(Calendar.DAY_OF_MONTH);
-			String finishDate = nYear+"-"+nMonth+"-"+nDay;
+			String returnExpectDay = nYear+"-"+nMonth+"-"+nDay;
 			
-		returnBooks.setRentalFinishDay(finishDate);
+		returnBooks.setReturnExpectDay(returnExpectDay);
 		
 		return returnBooks;
 	}
@@ -174,7 +177,7 @@ public class LibServiceImple implements LibService {
 		rental.setRentalStartDay(receiveRentData.getRentalStartDay());
 		rental.setReturnExpectDay(receiveRentData.getRentalFinishDay());
 		rental.setReturnStatus("N");
-		logger.info("rental : "+rental.toString());
+		logger.info(rental.toString());
 		return dao.rentalInsert(rental);
 	}
 
@@ -185,13 +188,70 @@ public class LibServiceImple implements LibService {
 		payment.setMemberId(receiveRentData.getMemberId());
 		payment.setPaymentPrice(receiveRentData.getPaymentPrice());
 		if(receiveRentData.getPaymentPrice()==0){
-			payment.setPaymentStatus("N");
+			payment.setPaymentStatus('N');
 		}else{
-			payment.setPaymentStatus("Y");
+			payment.setPaymentStatus('Y');
 		}
 		payment.setRentalCode(rental.getRentalCode());
-		logger.info("payment : "+payment.toString());
+		logger.info(payment.toString());
 		return dao.paymentInsert(payment);
+	}
+	
+	//반납도서정보 가져오기
+	@Override
+	public Books returnBookSelect(int bookCode) throws ParseException {
+		System.out.println("Serviceimpl bookCode : "+bookCode);
+		Books returnBook = dao.returnBookSelect(bookCode);
+		logger.info("enter : "+returnBook.toString());
+		
+		//빌린날짜 계산
+		String rentalStartDay = returnBook.getRentalStartDay();				//rental시작일
+		String rentalFinishDay = returnBook.getReturnExpectDay();			//rental반납일
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");	//yyyy-MM-dd 형식의 simpleDateFormat 생성	
+		 
+	    Date beginDate = formatter.parse(rentalStartDay);					//String 형식의 날짜를 Date 형식으로 변환
+	    Date endDate = formatter.parse(rentalFinishDay);
+	 
+	    long diff = endDate.getTime() - beginDate.getTime();				//Date형식의 날짜를 초로 구한 후 -> 반납일과 시작일의 차를 구함
+	    int diffDays = (int)(diff / (24 * 60 * 60 * 1000));					//계산한 결과(초)를 날짜로 바꾸어줌
+	 
+	    System.out.println("diffDays == RentalDays : "+diffDays);
+	    returnBook.setRentalDays(diffDays);
+		logger.info("exit : "+returnBook.toString());
+		return returnBook;
+	}
+	//반납 결제 정보 가져오기
+	@Override
+	public Payment returnPaymentSelect(int bookCode) {
+		
+		return dao.returnPaymentSelect(bookCode);
+	}
+	//결재 후 payment/rental 업데이트 
+	@Override
+	public int payRentUpdate(int paymentCode) {
+		// TODO Auto-generated method stub
+		return dao.payRentUpdate(paymentCode);
+	}
+
+	//결재후 books 업데이트
+	@Override
+	public int returnBookUpdate(ReceiveRentData receiveRentData) {
+		//첫 대여 날짜 정보 가져오기
+		Books firstRental=dao.firstRentalSelect(receiveRentData.getBookCode());
+		Books returnBooks = new Books();
+		
+		//returnBook에 다시 셋팅
+		returnBooks.setBookCode(receiveRentData.getBookCode());
+		returnBooks.setRentalDays(receiveRentData.getRentalDays());
+		if(firstRental.getFirstRentalDay()==null){
+			System.out.println("FirstrentalDay : "+firstRental.getFirstRentalDay());
+			returnBooks.setFirstRentalDay(receiveRentData.getRentalStartDay());
+		}
+		returnBooks.setRentalCount(firstRental.getRentalCount()+1);
+		returnBooks.setRentalDays(firstRental.getRentalDays()+receiveRentData.getRentalDays());
+		logger.info(returnBooks.toString());
+		
+		return dao.returnBookUpdate(returnBooks);
 	}
 
 }

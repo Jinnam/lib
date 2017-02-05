@@ -1,22 +1,23 @@
 package com.blog.beast4307.service;
 
 public class Books {
-	private int bookCode;
-	private int libCode;
-	private String bookName;
-	private String writer;
-	private String publisher;
-	private String category;
-	private String genre;
-	private String bookLocation;
-	private String currentStatus;
-	private String firstRentalDay;
-	private int rentalCount;
-	private int rentalDays;
-	private String rentalStartDay;
-	private String rentalFinishDay;
-	private String discardReason;
-	private String discardRegistrationDate;
+	private int bookCode;					//도서코드
+	private int libCode;					//도서관코드
+	private String bookName;				//도서이름
+	private String writer;					//저자
+	private String publisher;				//출판사
+	private String category;				//카테고리
+	private String genre;					//장르
+	private String bookLocation;			//책 위치
+	private String currentStatus;			//도서 상태(N/Y)
+	private String firstRentalDay;			//처음 대여한날
+	private int rentalCount;				//대여 카운트
+	private int rentalDays;					//대여 날짜 카운트
+	private String rentalStartDay;			//대여시작일
+	private String returnExpectDay;			//반납 예정일
+	
+	private String discardReason;			//폐기 이유
+	private String discardRegistrationDate;	//폐기 날짜
 
 	
 	
@@ -39,11 +40,11 @@ public class Books {
 	public void setRentalStartDay(String rentalStartDay) {
 		this.rentalStartDay = rentalStartDay;
 	}
-	public String getRentalFinishDay() {
-		return rentalFinishDay;
+	public String getReturnExpectDay() {
+		return returnExpectDay;
 	}
-	public void setRentalFinishDay(String rentalFinishDay) {
-		this.rentalFinishDay = rentalFinishDay;
+	public void setReturnExpectDay(String returnExpectDay) {
+		this.returnExpectDay = returnExpectDay;
 	}
 	public int getBookCode() {
 		return bookCode;
@@ -123,9 +124,10 @@ public class Books {
 				+ ", publisher=" + publisher + ", category=" + category + ", genre=" + genre + ", bookLocation="
 				+ bookLocation + ", currentStatus=" + currentStatus + ", firstRentalDay=" + firstRentalDay
 				+ ", rentalCount=" + rentalCount + ", rentalDays=" + rentalDays + ", rentalStartDay=" + rentalStartDay
-				+ ", rentalFinishDay=" + rentalFinishDay + ", discardReason=" + discardReason
+				+ ", returnExpectDay=" + returnExpectDay + ", discardReason=" + discardReason
 				+ ", discardRegistrationDate=" + discardRegistrationDate + "]";
 	}
+
 	
 	
 	

@@ -1,5 +1,6 @@
 package com.blog.beast4307.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,23 +14,65 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.blog.beast4307.service.Rental;
 import com.blog.beast4307.service.Admin;
 import com.blog.beast4307.service.Books;
 import com.blog.beast4307.service.Cost;
 import com.blog.beast4307.service.Lib;
 import com.blog.beast4307.service.LibService;
 import com.blog.beast4307.service.Member;
+import com.blog.beast4307.service.Payment;
 import com.blog.beast4307.service.ReceiveRentData;
 
 @Controller
 public class LibController {
 	private static final Logger logger = LoggerFactory.getLogger(LibController.class);
+
 	@Autowired
 	private LibService libService;
 	Lib lib = new Lib();
 	
+	
+	//도서 반납 폼 이동
+	@RequestMapping(value="/returnbook")
+	public String returnBook(){
+		return "ReturnBook";
+	}
+	
+	//도서반납 정보 가져오기
+	@RequestMapping(value="/returnbookinfo", method=RequestMethod.POST)
+	public @ResponseBody Books returnSelectBook(@RequestParam("bookCode") int bookCode){
+		System.out.println("bookCode : "+bookCode);
+		logger.info("/returnbookinfo");
+		Books returnBook;
+		try {
+			returnBook = libService.returnBookSelect(bookCode);
+			logger.info(returnBook.toString());
+		} catch (ParseException e) {							//String->date 형변환 예외 발생시
+			e.printStackTrace();
+			System.out.println("libService.returnBookSelect(bookCode) -> formatter.parse(rentalStartDay) Exception");
+			returnBook=null;
+		}
+		return returnBook;
+	}
+	
+	//도서반납 : 결제 정보 가져오기
+	@RequestMapping(value="/returnpayinfo", method=RequestMethod.POST)
+	public @ResponseBody Payment returnSelectPayment(@RequestParam("bookCode") int bookCode){
+		Payment payment = libService.returnPaymentSelect(bookCode);
+		logger.info("controller returnpayinfo payment : "+payment.toString());
+		return payment;
+	}
+		
+	//도서 반납 액션
+	@RequestMapping(value="/returnbook", method=RequestMethod.POST)
+	public String returnBook(ReceiveRentData receiveRentData){
+		logger.info("returnbook : "+receiveRentData.toString());
+		libService.payRentUpdate(receiveRentData.getPaymentCode());
+		libService.returnBookUpdate(receiveRentData);
+		return "redirect:returnbook";
+	}
 	
 	//도서 대여 폼 이동
 	@RequestMapping(value="/rentbook")
@@ -46,7 +89,7 @@ public class LibController {
 		//결제 등록
 		libService.paymentInsert(receiveRentData);
 		//도서 상태 업데이트(Y->N)
-		//libService.bookStatusUpdate(receiveRentData.getBookCode());
+		libService.bookStatusUpdate(receiveRentData.getBookCode());
 		return "redirect:rentbook";
 	}
 	//rent 도서 정보 조회
@@ -74,18 +117,7 @@ public class LibController {
 		Cost returnCost = libService.costSelect();
 		return returnCost;
 	}
-	//도서 반납 폼 이동
-	@RequestMapping(value="/returnbook")
-	public String returnBook(){
-		return "ReturnBook";
-	}
-		
-	//도서 반납 액션
-	@RequestMapping(value="/returnbook", method=RequestMethod.POST)
-	public String returnBook(Books books){
-			
-		return "redirect:ReturnBook";
-	}
+
 	//도서폐기 폼 이동
 	@RequestMapping(value="/deletebook")
 	public String deleteBook(){
@@ -99,8 +131,10 @@ public class LibController {
 		logger.info("delete process");
 		logger.info("books tostring: "+books.toString());
 		int bookCode = books.getBookCode();
-		libService.discardInsert(books);	//도서 폐기 등록
-		libService.bookStatusUpdate(bookCode);	//도서 상태 N을 업데이트
+		//도서 폐기 등록
+		libService.discardInsert(books);
+		//도서 상태 업데이트(Y->N)
+		libService.bookStatusUpdate(bookCode);
 		return "redirect:deletebook";
 	}
 	
@@ -124,6 +158,7 @@ public class LibController {
 	public String addBook(){
 		return "AddBook";
 	}
+	
 	//도서 추가 폼 액션
 	@RequestMapping(value="/addbook", method=RequestMethod.POST)
 	public String addBook(Books books){
@@ -136,6 +171,7 @@ public class LibController {
 	public String addLib(){
 		return "AddLibrary";
 	}
+	
 	//도서관 등록 액션
 	@RequestMapping(value="/addlib", method=RequestMethod.POST)
 	public String addLib(Lib lib){
@@ -148,6 +184,7 @@ public class LibController {
 	public String login(){
 		return "login";
 	}
+	
 	//로그인 액션
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(Admin admin, HttpSession session){
@@ -185,6 +222,7 @@ public class LibController {
 		logger.info(list.toString());
 		return "index";
 	}
+	
 	//회원가입 액션 후 index로 이동
 	@RequestMapping(value="/index", method=RequestMethod.POST)
 	public String inserMember(Member member){

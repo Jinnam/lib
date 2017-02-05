@@ -1,13 +1,27 @@
 package com.blog.beast4307.service;
 
 public class ReceiveRentData {
-	private String memberId;
-	private int bookCode;
-	private String rentalStartDay;
-	private String rentalFinishDay;	//결제금액
-	private int paymentPrice;		//받은금액
-	private int totalPrice;
+	private String memberId;			//회원 아이디
+	private int bookCode;				//도서 코드
+	private String rentalStartDay;		//대여 시작일
+	private String rentalFinishDay;		//대여 종료일
+	private int paymentPrice;			//결제금액
+	private int totalPrice;				//받은금액
+	private int paymentCode;			//결제코드
+	private int rentalDays;				//빌려간 기간
 	
+	public int getPaymentCode() {
+		return paymentCode;
+	}
+	public void setPaymentCode(int paymentCode) {
+		this.paymentCode = paymentCode;
+	}
+	public int getRentalDays() {
+		return rentalDays;
+	}
+	public void setRentalDays(int rentalDays) {
+		this.rentalDays = rentalDays;
+	}
 	public String getMemberId() {
 		return memberId;
 	}
@@ -48,7 +62,8 @@ public class ReceiveRentData {
 	public String toString() {
 		return "ReceiveRentData [memberId=" + memberId + ", bookCode=" + bookCode + ", rentalStartDay=" + rentalStartDay
 				+ ", rentalFinishDay=" + rentalFinishDay + ", paymentPrice=" + paymentPrice + ", totalPrice="
-				+ totalPrice + "]";
+				+ totalPrice + ", paymentCode=" + paymentCode + ", rentalDays=" + rentalDays + "]";
 	}
+	
 	
 }

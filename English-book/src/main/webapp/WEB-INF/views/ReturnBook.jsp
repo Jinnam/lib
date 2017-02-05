@@ -14,12 +14,13 @@
 	<div class="panel panel-default" style="width:60%" >
 		<div class="panel-heading" style="background-color:#2F2F2F;color:white" align="center">도서 반납</div>
 		<div class="panel-body">
-			
+			<form action="/returnbook" method="post">
 				<table class="table" style="color:black; width:50%" align="center">
 					<tr>
 						<td>도서코드</td>
 						<td><input type="text" name="bookCode" id="bookCode"/>&ensp;
 							<input type="button" id="selectbtn" value="조회" class="btn btn-default">
+							<input type="hidden" id="paymentCode" name="paymentCode"/>
 						</td>
 					</tr>
 					<tr>
@@ -51,14 +52,22 @@
 						<td><input type="text" name="rentalStartDay" id="rentalStartDay" readonly="readonly"/></td>
 					</tr>
 					<tr>
-						<td>결제금액</td>
-						<td><input type="text"/></td>
+						<td>대여기간</td>
+						<td><input type="text" name="rentalDays" id="rentalDays" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<td>결제된금액</td>
+						<td><input type="text" name="paidMoney" id="paidMoney" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<td>남은금액</td>
+						<td><input type="text" name="remainMoney" id="remainMoney" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<td colspan="2" align="right"><button type="submit" class="btn btn-default">결제/반납</button></td>
 					</tr>
 				</table>
-			
+			</form>
 		</div>
 	</div>
 	</center>
@@ -67,7 +76,7 @@
 $(document).ready(function(){
 	$("#selectbtn").click(function(){
 		$.ajax({
-			url : "/selectbook",
+			url : "/returnbookinfo",
 			type : "POST",
 			data : {"bookCode" : $('#bookCode').val()},
 			dateType : "json",
@@ -83,11 +92,38 @@ $(document).ready(function(){
 				var rentalFinishDay = data.rentalFinishDay;
 				$('#rentalStartDay').val(rentalStartDay);
 				$('#rentalFinishDay').val(data.rentalFinishDay);
-			}
+				$('#rentalDays').val(data.rentalDays);
+				
+			},
+			error : function(request,status,error){
+    	        alert("code:"+request.status+"\n"+"error: 책정보가 없습니다.\n"+error);
+    	       }
 			
-		});			
-	});
-});
+		})
+		
+		$.ajax({
+			url : "/returnpayinfo",
+			type : "POST",
+			data : {"bookCode" : $('#bookCode').val()},
+			dateType : "json",
+			success: function(data){
+				console.log(data);
+				$('#paymentCode').val(data.paymentCode);
+				var paymentPrice = data.paymentPrice;
+				$('#paidMoney').val(paymentPrice);
+				if(data.paymentStatus='N'){
+					console.log("무료회원");
+					$('#remainMoney').val(2000-paymentPrice);	
+				}else if(data.paymentStatus='Y'){
+					console.log("유료회원");
+					$('#remainMoney').val(1000-paymentPrice);
+				}
+				
+				
+			}
+		})
+	})
+})
 </script>
 
 

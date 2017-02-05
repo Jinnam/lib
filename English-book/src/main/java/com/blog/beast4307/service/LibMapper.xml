@@ -3,6 +3,96 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.blog.beast4307.service.LibMapper">
+
+	<!-- 결재 후 payment/rental 업데이트 -->
+	<update id="payRentUpdate" parameterType="int">
+		UPDATE
+			payment
+		INNER JOIN
+			rental
+		ON
+			payment.RENTALCODE = rental.RENTALCODE
+		SET
+			rental.RETURNDAY=CURDATE(),
+			rental.RETURNSTATUS="Y",
+			payment.PAYMENTSTATUS="Y"
+		WHERE
+			PAYMENTCODE=#{paymentCode}
+	</update>
+	
+	<!-- FIRSTRENTALDAY/RENTALCOUNT/RENTALDAYS가져오기 -->
+	<select id="booksInfoSelect" parameterType="int" resultType="com.blog.beast4307.service.Books">
+		SELECT
+			FIRSTRENTALDAY,
+			RENTALCOUNT,
+			RENTALDAYS
+		FROM
+			books
+		WHERE
+			BOOKCODE=#{bookCode}
+	</select>
+	
+	<!-- 결재 후 책 정보 업데이트 -->
+	<update id="returnBookUpdate" parameterType="com.blog.beast4307.service.Books">
+	UPDATE
+		books
+	SET
+		CURRENTSTATUS="Y",
+		RENTALDAYS=#{rentalDays},
+		<if test='#{firstRentalDay}!=null'>
+			FIRSTRENTALDAY=#{firstRentalDay},
+		</if>
+		RENTALCOUNT=#{rentalCount}
+	WHERE BOOKCODE=#{bookCode}
+	</update>
+	
+	<!-- 도서 결제 정보 가져오기 -->
+	<select id="paymentInfoSelect" parameterType="int" resultType="com.blog.beast4307.service.Payment">
+		SELECT
+			payment.PAYMENTPRICE,
+			payment.PAYMENTCODE,
+			member.MEMBERPAYMENTSTATUS AS paymentStatus
+		FROM
+			payment
+		INNER JOIN
+			member
+		ON
+			payment.MEMBERID=member.MEMBERID
+		WHERE
+			RENTALCODE=(SELECT
+							RENTALCODE
+						FROM
+							rental
+						WHERE
+							BOOKCODE=#{bookCode}
+						AND
+							RETURNSTATUS="N"
+							)
+			
+	</select>
+	
+
+	<!-- 반납도서 정보 가져오기 -->
+	<select id="returnbookSelect" parameterType="int" resultType="com.blog.beast4307.service.Books">
+		SELECT 
+			books.BOOKNAME,
+			books.WRITER,
+			books.PUBLISHER,
+			books.CATEGORY,
+			books.GENRE,
+			books.BOOKLOCATION,
+			rental.RENTALSTARTDAY,
+			rental.RETURNEXPECTDAY
+		FROM 
+			books
+		INNER JOIN 
+			rental
+		ON books.BOOKCODE=rental.BOOKCODE
+		WHERE
+			rental.RETURNSTATUS="N"
+		AND
+			books.BOOKCODE=#{bookCode}
+	</select>
 	
 	<!-- 대여정보 등록 -->
 	<insert id="rentalInsert" parameterType="com.blog.beast4307.service.Rental" useGeneratedKeys="true" keyProperty="rentalCode">
@@ -19,7 +109,7 @@
 				#{memberId},
 				#{rentalStartDay},
 				#{returnExpectDay},
-				#{returnDay},
+				"1999-01-01",
 				#{returnStatus}
 				)
 	</insert>
@@ -65,7 +155,7 @@
 			)
 	</insert>
 	
-	<!-- 도서폐기 등록 후 도서상태 업데이트 -->
+	<!--도서상태 업데이트(Y->N)  도서폐기/도서대여 -->
 	<update id="bookStatusUpdate" parameterType="int">
 		UPDATE
 			books
@@ -100,6 +190,8 @@
 			books
 		WHERE
 			BOOKCODE=#{bookCode}
+		AND
+			CURRENTSTATUS ='Y'
 	</select>
 
 	<!-- Admin 정보 가져오기 -->

@@ -6,8 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.sun.istack.internal.logging.Logger;
-
 @Repository
 public class LibDaoImple implements LibDao {
 	
@@ -111,7 +109,41 @@ public class LibDaoImple implements LibDao {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(NS+"paymentInsert", payment);
 	}
+	//반납 도서 정보 가져오기
+	@Override
+	public Books returnBookSelect(int bookCode) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"returnbookSelect",bookCode);
+	}
+	//반납 결제 정보 가져오기
+	@Override
+	public Payment returnPaymentSelect(int bookCode) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"paymentInfoSelect",bookCode);
+	}
+	//결재 후 payment/rental 업데이트 
+	@Override
+	public int payRentUpdate(int paymentCode) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NS+"payRentUpdate",paymentCode);
+	}
 	
+	//FIRSTRENTALDAY가져오기
+	@Override
+	public Books firstRentalSelect(int bookCode) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NS+"booksInfoSelect",bookCode);
+	}
+
+	//결재후 books 업데이트
+	@Override
+	public int returnBookUpdate(Books books) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NS+"returnBookUpdate",books);
+	}
+
+	
+
 	
 
 }

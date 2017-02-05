@@ -6,7 +6,7 @@ public class Payment {
 	private String memberId;
 	private String paymentDay;
 	private int paymentPrice;
-	private String paymentStatus;
+	private char paymentStatus;
 	
 	public int getPaymentCode() {
 		return paymentCode;
@@ -38,11 +38,10 @@ public class Payment {
 	public void setPaymentPrice(int paymentPrice) {
 		this.paymentPrice = paymentPrice;
 	}
-	
-	public String getPaymentStatus() {
+	public char getPaymentStatus() {
 		return paymentStatus;
 	}
-	public void setPaymentStatus(String paymentStatus) {
+	public void setPaymentStatus(char paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
 	@Override
@@ -51,6 +50,8 @@ public class Payment {
 				+ ", paymentDay=" + paymentDay + ", paymentPrice=" + paymentPrice + ", paymentStatus=" + paymentStatus
 				+ "]";
 	}
+	
+	
 	
 	
 }
