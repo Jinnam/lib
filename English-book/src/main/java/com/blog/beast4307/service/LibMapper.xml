@@ -67,6 +67,8 @@
 							BOOKCODE=#{bookCode}
 						AND
 							RETURNSTATUS="N"
+						AND
+							RETURNDAY="1999-01-01"
 							)
 			
 	</select>

@@ -111,10 +111,10 @@ $(document).ready(function(){
 				$('#paymentCode').val(data.paymentCode);
 				var paymentPrice = data.paymentPrice;
 				$('#paidMoney').val(paymentPrice);
-				if(data.paymentStatus='N'){
+				if(data.paymentStatus=='N'){
 					console.log("무료회원");
 					$('#remainMoney').val(2000-paymentPrice);	
-				}else if(data.paymentStatus='Y'){
+				}else if(data.paymentStatus=='Y'){
 					console.log("유료회원");
 					$('#remainMoney').val(1000-paymentPrice);
 				}
