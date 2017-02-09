@@ -34,6 +34,12 @@ public class LibController {
 	Lib lib = new Lib();
 	
 	
+	//주소찾기 폼 이동
+	@RequestMapping(value="/searchaddr")
+	public String searchAddr(){
+		return "post";
+	}
+	
 	//도서 반납 폼 이동
 	@RequestMapping(value="/returnbook")
 	public String returnBook(){

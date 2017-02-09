@@ -1,0 +1,319 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.blog.beast4307.service.LibMapper">
+
+	<!-- 결재 후 payment/rental 업데이트 -->
+	<update id="payRentUpdate" parameterType="int">
+		UPDATE
+			payment
+		INNER JOIN
+			rental
+		ON
+			payment.RENTALCODE = rental.RENTALCODE
+		SET
+			rental.RETURNDAY=CURDATE(),
+			rental.RETURNSTATUS="Y",
+			payment.PAYMENTSTATUS="Y"
+		WHERE
+			PAYMENTCODE=#{paymentCode}
+	</update>
+	
+	<!-- FIRSTRENTALDAY/RENTALCOUNT/RENTALDAYS가져오기 -->
+	<select id="booksInfoSelect" parameterType="int" resultType="com.blog.beast4307.service.Books">
+		SELECT
+			FIRSTRENTALDAY,
+			RENTALCOUNT,
+			RENTALDAYS
+		FROM
+			books
+		WHERE
+			BOOKCODE=#{bookCode}
+	</select>
+	
+	<!-- 결재 후 책 정보 업데이트 -->
+	<update id="returnBookUpdate" parameterType="com.blog.beast4307.service.Books">
+	UPDATE
+		books
+	SET
+		CURRENTSTATUS="Y",
+		RENTALDAYS=#{rentalDays},
+		<if test='#{firstRentalDay}!=null'>
+			FIRSTRENTALDAY=#{firstRentalDay},
+		</if>
+		RENTALCOUNT=#{rentalCount}
+	WHERE BOOKCODE=#{bookCode}
+	</update>
+	
+	<!-- 도서 결제 정보 가져오기 -->
+	<select id="paymentInfoSelect" parameterType="int" resultType="com.blog.beast4307.service.Payment">
+		SELECT
+			payment.PAYMENTPRICE,
+			payment.PAYMENTCODE,
+			member.MEMBERPAYMENTSTATUS AS paymentStatus
+		FROM
+			payment
+		INNER JOIN
+			member
+		ON
+			payment.MEMBERID=member.MEMBERID
+		WHERE
+			RENTALCODE=(SELECT
+							RENTALCODE
+						FROM
+							rental
+						WHERE
+							BOOKCODE=#{bookCode}
+						AND
+							RETURNSTATUS="N"
+						AND
+							RETURNDAY="1999-01-01"
+							)
+			
+	</select>
+	
+
+	<!-- 반납도서 정보 가져오기 -->
+	<select id="returnbookSelect" parameterType="int" resultType="com.blog.beast4307.service.Books">
+		SELECT 
+			books.BOOKNAME,
+			books.WRITER,
+			books.PUBLISHER,
+			books.CATEGORY,
+			books.GENRE,
+			books.BOOKLOCATION,
+			rental.RENTALSTARTDAY,
+			rental.RETURNEXPECTDAY
+		FROM 
+			books
+		INNER JOIN 
+			rental
+		ON books.BOOKCODE=rental.BOOKCODE
+		WHERE
+			rental.RETURNSTATUS="N"
+		AND
+			books.BOOKCODE=#{bookCode}
+	</select>
+	
+	<!-- 대여정보 등록 -->
+	<insert id="rentalInsert" parameterType="com.blog.beast4307.service.Rental" useGeneratedKeys="true" keyProperty="rentalCode">
+		INSERT INTO
+			rental(
+				BOOKCODE,
+				MEMBERID,
+				RENTALSTARTDAY,
+				RETURNEXPECTDAY,
+				RETURNDAY,
+				RETURNSTATUS
+			)VALUES(
+				#{bookCode},
+				#{memberId},
+				#{rentalStartDay},
+				#{returnExpectDay},
+				"1999-01-01",
+				#{returnStatus}
+				)
+	</insert>
+	<!-- 결제정보 등록 -->
+	<insert id="paymentInsert" parameterType="com.blog.beast4307.service.Payment">
+		INSERT INTO
+			payment(
+				RENTALCODE,
+				MEMBERID,
+				PAYMENTDAY,
+				PAYMENTPRICE,
+				PAYMENTSTATUS
+			)VALUES(
+				#{rentalCode},
+				#{memberId},
+				CURDATE(),
+				#{paymentPrice},
+				#{paymentStatus}
+			)
+	</insert>
+
+
+	<!-- 결제가격 가져오기 -->
+	<select id="paymentSelecet" resultType="com.blog.beast4307.service.Cost">
+		SELECT 
+			MEMBERRENTALCOST,
+			NONMEMBERRENTALCOST
+		FROM
+			cost
+	</select>
+
+	<!-- 도서폐기 등록 -->
+	<insert id="discardInsert" parameterType="com.blog.beast4307.service.Books">
+		INSERT INTO
+			discardbooks(
+				BOOKCODE,
+				DISCARDREASON,
+				DISCARDREGISTRATIONDATE
+			)VALUES(
+				#{bookCode},
+				#{discardReason},
+				CURDATE()
+			)
+	</insert>
+	
+	<!--도서상태 업데이트(Y->N)  도서폐기/도서대여 -->
+	<update id="bookStatusUpdate" parameterType="int">
+		UPDATE
+			books
+		SET
+			CURRENTSTATUS="N"
+		WHERE
+			BOOKCODE=#{bookCode}
+	</update>
+	
+	<!-- 대여 : 회원정보 가져오기  -->
+	<select id="rentMemberSelect" parameterType="String" resultType="com.blog.beast4307.service.Member">
+		SELECT 
+			MEMBERNAME, 
+			MEMBERPHONE,
+			MEMBERPAYMENTSTATUS
+		FROM 
+			member
+		WHERE
+			MEMBERID=#{memberId}
+	</select>
+	
+	<!-- 대여 : 도서정보 가져오기 -->
+	<select id="rentBookSelect" parameterType="int" resultType="com.blog.beast4307.service.Books">
+		SELECT
+			BOOKNAME,
+			WRITER,
+			PUBLISHER,
+			CATEGORY,
+			GENRE,
+			BOOKLOCATION
+		FROM
+			books
+		WHERE
+			BOOKCODE=#{bookCode}
+		AND
+			CURRENTSTATUS ='Y'
+	</select>
+
+	<!-- Admin 정보 가져오기 -->
+	<select id="adminSelect" parameterType="String" resultType="com.blog.beast4307.service.Admin">
+		SELECT
+			ADMINID,
+			ADMINPW,
+			LIBCODE
+		FROM
+			admin
+		WHERE
+			ADMINID=#{adminId}
+	</select>
+	
+	
+	<!-- 회비 납부 안한 회원정보 가져오기 -->
+	<select id="memberSelect" resultType="com.blog.beast4307.service.Member">
+		SELECT 
+			MEMBERID, 
+			MEMBERNAME, 
+			MEMBERPHONE, 
+			MEMBERADDR 
+		FROM 
+			member
+ 		WHERE 
+			MEMBERPAYMENTSTATUS='N';
+	</select>
+	
+	<!-- 회비 납부 확인 후 회비납부상태 업데이트 -->
+	<update id="memberPayUpdate" parameterType="String">
+		UPDATE
+			member
+		SET
+			MEMBERPAYMENTSTATUS='Y'
+		WHERE
+			MEMBERID=#{memberId}
+	</update>
+	
+	<!-- 회원가입시 도서관 목록 가져오기 -->
+	<select id="librarySelect" resultType="com.blog.beast4307.service.Lib">
+		SELECT
+			LIBCODE,
+			LIBNAME,
+			LIBLOCATION
+		FROM lib
+	</select>
+	
+	<!-- 회원가입 INSERT -->
+ 	<insert id="memberInsert" parameterType="com.blog.beast4307.service.Member">
+ 		INSERT INTO member(
+			MEMBERID,
+			MEMBERPW,
+			MEMBERNAME,
+			MEMBERBIRTHDAY,
+			MEMBERPHONE,
+			MEMBERADDR,
+			JOINDAY,
+			LIBCODE,
+			MEMBERPAYMENTSTATUS
+ 		)VALUES(
+	 		#{memberId},
+	 		#{memberPw},
+	 		#{memberName},
+	 		#{memberBirthDay},
+	 		#{memberPhone},
+	 		#{memberAddr},
+	 		CURDATE(),
+	 		#{libCode},
+	 		#{memberPaymentStatus}
+ 		)
+ 	</insert>
+ 	<!-- 도서관 등록 -->
+ 	<insert id="libraryInsert" parameterType="com.blog.beast4307.service.Lib">
+		INSERT INTO lib(
+			LIBNAME,
+			LIBLOCATION
+		)VALUES(
+			#{libName},
+			#{libLocation}
+		)
+ 	</insert>
+ 	
+ 	<!-- 도서등록 -->
+	<insert id="bookInsert" parameterType="com.blog.beast4307.service.Books">
+		INSERT INTO books(
+			LIBCODE,
+			BOOKNAME,
+			WRITER,
+			PUBLISHER,
+			CATEGORY,
+			GENRE,
+			BOOKLOCATION,
+			CURRENTSTATUS,
+			RENTALCOUNT,
+			RENTALDAYS
+		)VALUES(
+			#{libCode},
+			#{bookName},
+			#{writer},
+			#{publisher},
+			#{category},
+			#{genre},
+			#{bookLocation},
+			#{currentStatus},
+			#{rentalCount},
+			#{rentalDays}			
+		)
+
+	</insert> 	
+	
+	
+ 	<!-- 로그인 위해 아이디 비밀번호 가져오기 -->
+ 	<select id="loginSelect" parameterType="String" resultType="com.blog.beast4307.service.Member">
+ 		SELECT
+ 			MEMBERID,
+ 			MEMBERPW
+ 		FROM 
+ 			member
+ 		WHERE
+ 			MEMBERID=#{memberId} 
+ 	</select>
+ 	
+</mapper>

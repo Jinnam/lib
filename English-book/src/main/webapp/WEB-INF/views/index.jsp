@@ -4,6 +4,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#postbtn').click(function(){
+			window.open('/searchaddr',
+						'popup',
+						'width=300,height=200,left=0,top=0,toolbar=no,location=no,directories=no,status=no,menubar=no,resizable=no,scrollbars=no,copyhistory=no')
+		})
+	})
+</script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/module/MemberTop.jsp"/>
@@ -65,6 +75,7 @@
 				<tr>
 					<td>주소</td>
 					<td><input type="text" name="memberAddr"/>
+					<input type="button" id="postbtn" value="우편번호 검색"/>
 					</td>
 				</tr>
 				<tr>
