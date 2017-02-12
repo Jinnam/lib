@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.blog.beast4307.service.Admin;
 import com.blog.beast4307.service.Books;
@@ -32,13 +31,6 @@ public class LibController {
 	@Autowired
 	private LibService libService;
 	Lib lib = new Lib();
-	
-	
-	//ÁÖ¼ÒÃ£±â Æû ÀÌµ¿
-	@RequestMapping(value="/searchaddr")
-	public String searchAddr(){
-		return "post";
-	}
 	
 	//µµ¼­ ¹Ý³³ Æû ÀÌµ¿
 	@RequestMapping(value="/returnbook")

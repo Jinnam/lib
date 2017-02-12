@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public interface LibService {
 	static final Logger logger = LoggerFactory.getLogger(LibService.class);
+	
 	//결재후 books 업데이트
 	int returnBookUpdate(ReceiveRentData receiveRentData);	
 	//결재 후 payment/rental 업데이트 
