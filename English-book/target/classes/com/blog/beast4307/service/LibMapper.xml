@@ -9,7 +9,7 @@
 		UPDATE
 			payment
 		INNER JOIN
-			rental
+			ENG_rental
 		ON
 			payment.RENTALCODE = rental.RENTALCODE
 		SET
@@ -27,7 +27,7 @@
 			RENTALCOUNT,
 			RENTALDAYS
 		FROM
-			books
+			ENG_books
 		WHERE
 			BOOKCODE=#{bookCode}
 	</select>
@@ -35,7 +35,7 @@
 	<!-- 결재 후 책 정보 업데이트 -->
 	<update id="returnBookUpdate" parameterType="com.blog.beast4307.service.Books">
 	UPDATE
-		books
+		ENG_books
 	SET
 		CURRENTSTATUS="Y",
 		RENTALDAYS=#{rentalDays},
@@ -49,20 +49,20 @@
 	<!-- 도서 결제 정보 가져오기 -->
 	<select id="paymentInfoSelect" parameterType="int" resultType="com.blog.beast4307.service.Payment">
 		SELECT
-			payment.PAYMENTPRICE,
-			payment.PAYMENTCODE,
-			member.MEMBERPAYMENTSTATUS AS paymentStatus
+			ENG_payment.PAYMENTPRICE,
+			ENG_payment.PAYMENTCODE,
+			ENG_member.MEMBERPAYMENTSTATUS AS paymentStatus
 		FROM
-			payment
+			ENG_payment
 		INNER JOIN
-			member
+			ENG_member
 		ON
-			payment.MEMBERID=member.MEMBERID
+			ENG_payment.MEMBERID=ENG_member.MEMBERID
 		WHERE
 			RENTALCODE=(SELECT
 							RENTALCODE
 						FROM
-							rental
+							ENG_rental
 						WHERE
 							BOOKCODE=#{bookCode}
 						AND
@@ -77,29 +77,29 @@
 	<!-- 반납도서 정보 가져오기 -->
 	<select id="returnbookSelect" parameterType="int" resultType="com.blog.beast4307.service.Books">
 		SELECT 
-			books.BOOKNAME,
-			books.WRITER,
-			books.PUBLISHER,
-			books.CATEGORY,
-			books.GENRE,
-			books.BOOKLOCATION,
-			rental.RENTALSTARTDAY,
-			rental.RETURNEXPECTDAY
+			ENG_books.BOOKNAME,
+			ENG_books.WRITER,
+			ENG_books.PUBLISHER,
+			ENG_books.CATEGORY,
+			ENG_books.GENRE,
+			ENG_books.BOOKLOCATION,
+			ENG_rental.RENTALSTARTDAY,
+			ENG_rental.RETURNEXPECTDAY
 		FROM 
-			books
+			ENG_books
 		INNER JOIN 
-			rental
-		ON books.BOOKCODE=rental.BOOKCODE
+			ENG_rental
+		ON ENG_books.BOOKCODE=ENG_rental.BOOKCODE
 		WHERE
-			rental.RETURNSTATUS="N"
+			ENG_rental.RETURNSTATUS="N"
 		AND
-			books.BOOKCODE=#{bookCode}
+			ENG_books.BOOKCODE=#{bookCode}
 	</select>
 	
 	<!-- 대여정보 등록 -->
 	<insert id="rentalInsert" parameterType="com.blog.beast4307.service.Rental" useGeneratedKeys="true" keyProperty="rentalCode">
 		INSERT INTO
-			rental(
+			ENG_rental(
 				BOOKCODE,
 				MEMBERID,
 				RENTALSTARTDAY,
@@ -118,7 +118,7 @@
 	<!-- 결제정보 등록 -->
 	<insert id="paymentInsert" parameterType="com.blog.beast4307.service.Payment">
 		INSERT INTO
-			payment(
+			ENG_payment(
 				RENTALCODE,
 				MEMBERID,
 				PAYMENTDAY,
@@ -140,13 +140,13 @@
 			MEMBERRENTALCOST,
 			NONMEMBERRENTALCOST
 		FROM
-			cost
+			ENG_cost
 	</select>
 
 	<!-- 도서폐기 등록 -->
 	<insert id="discardInsert" parameterType="com.blog.beast4307.service.Books">
 		INSERT INTO
-			discardbooks(
+			ENG_discardbooks(
 				BOOKCODE,
 				DISCARDREASON,
 				DISCARDREGISTRATIONDATE
@@ -160,7 +160,7 @@
 	<!--도서상태 업데이트(Y->N)  도서폐기/도서대여 -->
 	<update id="bookStatusUpdate" parameterType="int">
 		UPDATE
-			books
+			ENG_books
 		SET
 			CURRENTSTATUS="N"
 		WHERE
@@ -174,7 +174,7 @@
 			MEMBERPHONE,
 			MEMBERPAYMENTSTATUS
 		FROM 
-			member
+			ENG_member
 		WHERE
 			MEMBERID=#{memberId}
 	</select>
@@ -189,7 +189,7 @@
 			GENRE,
 			BOOKLOCATION
 		FROM
-			books
+			ENG_books
 		WHERE
 			BOOKCODE=#{bookCode}
 		AND
@@ -203,7 +203,7 @@
 			ADMINPW,
 			LIBCODE
 		FROM
-			admin
+			ENG_admin
 		WHERE
 			ADMINID=#{adminId}
 	</select>
@@ -217,7 +217,7 @@
 			MEMBERPHONE, 
 			MEMBERADDR 
 		FROM 
-			member
+			ENG_member
  		WHERE 
 			MEMBERPAYMENTSTATUS='N';
 	</select>
@@ -225,7 +225,7 @@
 	<!-- 회비 납부 확인 후 회비납부상태 업데이트 -->
 	<update id="memberPayUpdate" parameterType="String">
 		UPDATE
-			member
+			ENG_member
 		SET
 			MEMBERPAYMENTSTATUS='Y'
 		WHERE
@@ -238,12 +238,12 @@
 			LIBCODE,
 			LIBNAME,
 			LIBLOCATION
-		FROM lib
+		FROM ENG_lib
 	</select>
 	
 	<!-- 회원가입 INSERT -->
  	<insert id="memberInsert" parameterType="com.blog.beast4307.service.Member">
- 		INSERT INTO member(
+ 		INSERT INTO ENG_member(
 			MEMBERID,
 			MEMBERPW,
 			MEMBERNAME,
@@ -267,7 +267,7 @@
  	</insert>
  	<!-- 도서관 등록 -->
  	<insert id="libraryInsert" parameterType="com.blog.beast4307.service.Lib">
-		INSERT INTO lib(
+		INSERT INTO ENG_lib(
 			LIBNAME,
 			LIBLOCATION
 		)VALUES(
@@ -278,7 +278,7 @@
  	
  	<!-- 도서등록 -->
 	<insert id="bookInsert" parameterType="com.blog.beast4307.service.Books">
-		INSERT INTO books(
+		INSERT INTO ENG_books(
 			LIBCODE,
 			BOOKNAME,
 			WRITER,
@@ -311,7 +311,7 @@
  			MEMBERID,
  			MEMBERPW
  		FROM 
- 			member
+ 			ENG_member
  		WHERE
  			MEMBERID=#{memberId} 
  	</select>
