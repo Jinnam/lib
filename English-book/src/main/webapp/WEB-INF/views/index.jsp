@@ -57,6 +57,7 @@
 <jsp:include page="/WEB-INF/module/MemberTop.jsp"/>
 <!-- Header -->
     <header>
+    <p align="right"><a class="btn btn-warning btn-lg" href="/login">관리자 로그인</a></p>
         <div id="mainbody" align="center">
         	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                 <div class="intro-lead-in">꿈과 사랑이 가득한</div>
@@ -77,7 +78,7 @@
       <div class="modal-body">
       
       <!-- 회원가입 폼 -->
-        <form action="/index" method="post">
+        <form action="index" method="post">
 			<table class="table table-hover">
 				<tr>
 					<td>도서관</td>
@@ -114,7 +115,7 @@
 				</tr>
 				<tr>
 					<td>주소</td>
-					<td><input type="text" id="memberPostcode" name="memberPostcode" placeholder="우편번호" size="5" readonly="readonly"/>
+					<td><input type="text" id="memberPostcode" name="postNum" placeholder="우편번호" size="5" readonly="readonly"/>
 						<input type="button" onclick="getDaumPostcode()" value="우편번호 찾기"/><br/>
 						<input type="text" id="memberAddr" name="memberAddr" placeholder="주소" size="40" readonly="readonly"/><br/>
 						<input type="text" id="memberAddr2" name="memberAddr2" placeholder="상세주소"/>

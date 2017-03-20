@@ -7,42 +7,42 @@ import org.slf4j.LoggerFactory;
 
 public interface LibDao {
 	static final Logger logger = LoggerFactory.getLogger(LibDao.class);
-	//°áÀçÈÄ books ¾÷µ¥ÀÌÆ®
+	//ê²°ì¬í›„ books ì—…ë°ì´íŠ¸
 	int returnBookUpdate(Books books);	
-	//FIRSTRENTALDAY°¡Á®¿À±â
+	//FIRSTRENTALDAYê°€ì ¸ì˜¤ê¸°
 	Books firstRentalSelect(int bookCode);
-	//°áÀç ÈÄ payment/rental ¾÷µ¥ÀÌÆ® 
+	//ê²°ì¬ í›„ payment/rental ì—…ë°ì´íŠ¸ 
 	int payRentUpdate(int paymentCode);
-	//¹İ³³ °áÁ¦Á¤º¸°¡Á®¿À±â
+	//ë°˜ë‚© ê²°ì œì •ë³´ê°€ì ¸ì˜¤ê¸°
 	Payment returnPaymentSelect(int bookCode);	
-	//¹İ³³ µµ¼­Á¤º¸°¡Á®¿À±â
+	//ë°˜ë‚© ë„ì„œì •ë³´ê°€ì ¸ì˜¤ê¸°
 	Books returnBookSelect(int bookCode);
-	//´ë¿©Á¤º¸ µî·Ï
+	//ëŒ€ì—¬ì •ë³´ ë“±ë¡
 	int rentalInsert(Rental rental);
-	//°áÁ¦Á¤º¸ µî·Ï
+	//ê²°ì œì •ë³´ ë“±ë¡
 	int paymentInsert(Payment payment);
-	//°áÁ¦Á¤º¸(±İ¾×)°¡Á®¿À±â
+	//ê²°ì œì •ë³´(ê¸ˆì•¡)ê°€ì ¸ì˜¤ê¸°
 	Cost costSelect();
-	//µµ¼­ Æó±â µî·Ï
+	//ë„ì„œ íê¸° ë“±ë¡
 	int discardInsert(Books books);
-	//µµ¼­Æó±â ÈÄ µµ¼­ »óÅÂ ¾÷µ¥ÀÌÆ®
+	//ë„ì„œíê¸° í›„ ë„ì„œ ìƒíƒœ ì—…ë°ì´íŠ¸
 	int bookStatusUpdate(int bookCode);
-	//rent µµ¼­Á¤º¸ °¡Á®¿À±â
+	//rent ë„ì„œì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	Books rentBookSelect(int bookCode);
-	//rent È¸¿øÁ¤º¸ °¡Á®¿À±â
+	//rent íšŒì›ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	Member rentMemberSelect(String memberId);
-	//admin Á¤º¸°¡Á®¿À±â
+	//admin ì •ë³´ê°€ì ¸ì˜¤ê¸°
 	Admin selectAdmin(String adminId);
-	//È¸¿ø°¡ÀÔ
+	//íšŒì›ê°€ì…
 	int insertMember(Member member);
-	//µµ¼­°üµî·Ï
+	//ë„ì„œê´€ë“±ë¡
 	int insertLib(Lib lib);
-	//µµ¼­ µî·Ï
+	//ë„ì„œ ë“±ë¡
 	int insertBook(Books books);
-	//È¸¿ø ¸ñ·Ï °¡Á®¿À±â
+	//íšŒì› ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
 	List<Member> selectMember();
-	//È¸¿ø Á¤º¸ ¼öÁ¤(ÀÔ±İ È®ÀÎ)
+	//íšŒì› ì •ë³´ ìˆ˜ì •(ì…ê¸ˆ í™•ì¸)
 	int updatePayMember(String memberId);
-	//È¸¿ø°¡ÀÔ½Ã µµ¼­°ü ¸ñ·Ï °¡Á®¿À±â
+	//íšŒì›ê°€ì…ì‹œ ë„ì„œê´€ ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
 	List<Lib> selectLib();
 }

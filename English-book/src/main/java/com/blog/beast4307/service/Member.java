@@ -9,11 +9,27 @@ public class Member {
 	private String phone1;
 	private String phone2;
 	private String phone3;
+	private int postNum;
 	private String memberAddr;
+	private String memberAddr2;
 	private String joinDay;
 	private int libCode;
 	private int rentalCount;
 	private char memberPaymentStatus;
+	
+	
+	public int getPostNum() {
+		return postNum;
+	}
+	public void setPostNum(int postNum) {
+		this.postNum = postNum;
+	}
+	public String getMemberAddr2() {
+		return memberAddr2;
+	}
+	public void setMemberAddr2(String memberAddr2) {
+		this.memberAddr2 = memberAddr2;
+	}
 	public String getMemberId() {
 		return memberId;
 	}
@@ -96,9 +112,9 @@ public class Member {
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberPw=" + memberPw + ", memberName=" + memberName
 				+ ", memberBirthDay=" + memberBirthDay + ", memberPhone=" + memberPhone + ", phone1=" + phone1
-				+ ", phone2=" + phone2 + ", phone3=" + phone3 + ", memberAddr=" + memberAddr + ", joinDay=" + joinDay
-				+ ", libCode=" + libCode + ", rentalCount=" + rentalCount + ", memberPaymentStatus="
-				+ memberPaymentStatus + "]";
+				+ ", phone2=" + phone2 + ", phone3=" + phone3 + ", postNum=" + postNum + ", memberAddr=" + memberAddr
+				+ ", memberAddr2=" + memberAddr2 + ", joinDay=" + joinDay + ", libCode=" + libCode + ", rentalCount="
+				+ rentalCount + ", memberPaymentStatus=" + memberPaymentStatus + "]";
 	}
 	
 	

@@ -11,7 +11,7 @@
 
 	<div style="height: 100px"></div>
 	<center>
-		<form action="/rentbook" method="post">
+		<form action="rentbook" method="post">
 			<div class="panel panel-default" style="width: 40%" align="left">
 				<div class="panel-heading"
 					style="background-color: #2F2F2F; color: white" align="center">회원정보</div>
@@ -128,7 +128,7 @@ $(document).ready(function(){
 		$('.membertable').empty();
 		console.log('버튼클릭');
 		$.ajax({
-			url : "/rentmember",
+			url : "rentmember",
 			type : "POST",
 			data : {"memberId" : $('#memberId').val()},
 			dataType : "json",
@@ -155,7 +155,7 @@ $(document).ready(function(){
 	$("#bookbtn").click(function(){
 		$('.booktable').empty(); 
 		$.ajax({
-			url : "/selectbook",
+			url : "selectbook",
 			type : "POST",
 			data : {"bookCode" : $('#bookCode').val()},
 			dateType : "json",
@@ -175,7 +175,7 @@ $(document).ready(function(){
     	       }
 		})
 		 $.ajax({
-    	   url : "/costselect",
+    	   url : "costselect",
     	   type : "POST",
     	   dataType : "json",
     	   success : function(data){

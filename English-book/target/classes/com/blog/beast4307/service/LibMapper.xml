@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -249,6 +250,7 @@
 			MEMBERNAME,
 			MEMBERBIRTHDAY,
 			MEMBERPHONE,
+			POSTNUM,
 			MEMBERADDR,
 			JOINDAY,
 			LIBCODE,
@@ -259,6 +261,7 @@
 	 		#{memberName},
 	 		#{memberBirthDay},
 	 		#{memberPhone},
+	 		#{postNum},
 	 		#{memberAddr},
 	 		CURDATE(),
 	 		#{libCode},

@@ -11,7 +11,7 @@
     <header>
         <div id="mainbody" align="center">
         	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-			<form action="/login" method="post">
+			<form action="login" method="post">
                 <table>
                 	<tr>
                 		<td align="center">ID</td>

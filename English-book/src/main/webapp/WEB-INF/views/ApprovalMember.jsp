@@ -12,7 +12,7 @@
 	<div class="panel panel-default" style="width:60%" >
 		<div class="panel-heading" style="background-color:#2F2F2F;color:white" align="center">È¸¿ø ½ÂÀÎ</div>
 		<div class="panel-body">
-			<form action="/approval" method="post">
+			<form action="approval" method="post">
 				<table class="table" style="color:black" align="center">
 					<thead>
 					<tr>

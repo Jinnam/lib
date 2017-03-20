@@ -32,13 +32,13 @@ public class LibController {
 	private LibService libService;
 	Lib lib = new Lib();
 	
-	//µµ¼­ ¹İ³³ Æû ÀÌµ¿
+	//ë„ì„œ ë°˜ë‚© í¼ ì´ë™
 	@RequestMapping(value="/returnbook")
 	public String returnBook(){
 		return "ReturnBook";
 	}
 	
-	//µµ¼­¹İ³³ Á¤º¸ °¡Á®¿À±â
+	//ë„ì„œë°˜ë‚© ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@RequestMapping(value="/returnbookinfo", method=RequestMethod.POST)
 	public @ResponseBody Books returnSelectBook(@RequestParam("bookCode") int bookCode){
 		System.out.println("bookCode : "+bookCode);
@@ -47,7 +47,7 @@ public class LibController {
 		try {
 			returnBook = libService.returnBookSelect(bookCode);
 			logger.info(returnBook.toString());
-		} catch (ParseException e) {							//String->date Çüº¯È¯ ¿¹¿Ü ¹ß»ı½Ã
+		} catch (ParseException e) {							//String->date í˜•ë³€í™˜ ì˜ˆì™¸ ë°œìƒì‹œ
 			e.printStackTrace();
 			System.out.println("libService.returnBookSelect(bookCode) -> formatter.parse(rentalStartDay) Exception");
 			returnBook=null;
@@ -55,7 +55,7 @@ public class LibController {
 		return returnBook;
 	}
 	
-	//µµ¼­¹İ³³ : °áÁ¦ Á¤º¸ °¡Á®¿À±â
+	//ë„ì„œë°˜ë‚© : ê²°ì œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@RequestMapping(value="/returnpayinfo", method=RequestMethod.POST)
 	public @ResponseBody Payment returnSelectPayment(@RequestParam("bookCode") int bookCode){
 		Payment payment = libService.returnPaymentSelect(bookCode);
@@ -63,7 +63,7 @@ public class LibController {
 		return payment;
 	}
 		
-	//µµ¼­ ¹İ³³ ¾×¼Ç
+	//ë„ì„œ ë°˜ë‚© ì•¡ì…˜
 	@RequestMapping(value="/returnbook", method=RequestMethod.POST)
 	public String returnBook(ReceiveRentData receiveRentData){
 		logger.info("returnbook : "+receiveRentData.toString());
@@ -72,25 +72,25 @@ public class LibController {
 		return "redirect:returnbook";
 	}
 	
-	//µµ¼­ ´ë¿© Æû ÀÌµ¿
+	//ë„ì„œ ëŒ€ì—¬ í¼ ì´ë™
 	@RequestMapping(value="/rentbook")
 	public String rentBook(){
 		return "RentBook";
 	}
 	
-	//µµ¼­ ´ë¿© ¾×¼Ç
+	//ë„ì„œ ëŒ€ì—¬ ì•¡ì…˜
 	@RequestMapping(value="/rentbook", method=RequestMethod.POST)
 	public String rentBook(ReceiveRentData receiveRentData){
 		logger.info(receiveRentData.toString());
-		//´ë¿© µî·Ï
+		//ëŒ€ì—¬ ë“±ë¡
 		libService.rentalInsert(receiveRentData);
-		//°áÁ¦ µî·Ï
+		//ê²°ì œ ë“±ë¡
 		libService.paymentInsert(receiveRentData);
-		//µµ¼­ »óÅÂ ¾÷µ¥ÀÌÆ®(Y->N)
+		//ë„ì„œ ìƒíƒœ ì—…ë°ì´íŠ¸(Y->N)
 		libService.bookStatusUpdate(receiveRentData.getBookCode());
 		return "redirect:rentbook";
 	}
-	//rent µµ¼­ Á¤º¸ Á¶È¸
+	//rent ë„ì„œ ì •ë³´ ì¡°íšŒ
 	@RequestMapping(value="/selectbook", method=RequestMethod.POST)
 	public @ResponseBody Books selectRentBook(@RequestParam("bookCode") int bookCode){
 		logger.info("select book");
@@ -99,7 +99,7 @@ public class LibController {
 		return returnBook;
 	}
 	
-	//rent ¸â¹ö Á¤º¸ Á¶È¸
+	//rent ë©¤ë²„ ì •ë³´ ì¡°íšŒ
 	@RequestMapping(value="/rentmember", method=RequestMethod.POST)
 	public @ResponseBody Member selectRentMember(@RequestParam("memberId") String memberId){
 		logger.info("rentmember");
@@ -108,7 +108,7 @@ public class LibController {
 		return returnMember;
 	}
 	
-	//È¸¿ø/ºñÈ¸¿ø °¡°İÁ¤º¸ °¡Á®¿À±â
+	//íšŒì›/ë¹„íšŒì› ê°€ê²©ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@RequestMapping(value="/costselect", method=RequestMethod.POST)
 	public @ResponseBody Cost costSelect(){
 		logger.info("costselect");
@@ -116,27 +116,27 @@ public class LibController {
 		return returnCost;
 	}
 
-	//µµ¼­Æó±â Æû ÀÌµ¿
+	//ë„ì„œíê¸° í¼ ì´ë™
 	@RequestMapping(value="/deletebook")
 	public String deleteBook(){
 		logger.info("delete form");
 		return "DeleteBook";
 	}
 		
-	//µµ¼­ Æó±â ¾×¼Ç
+	//ë„ì„œ íê¸° ì•¡ì…˜
 	@RequestMapping(value="/deletebook", method=RequestMethod.POST)
 	public String deleteBook(Books books){
 		logger.info("delete process");
 		logger.info("books tostring: "+books.toString());
 		int bookCode = books.getBookCode();
-		//µµ¼­ Æó±â µî·Ï
+		//ë„ì„œ íê¸° ë“±ë¡
 		libService.discardInsert(books);
-		//µµ¼­ »óÅÂ ¾÷µ¥ÀÌÆ®(Y->N)
+		//ë„ì„œ ìƒíƒœ ì—…ë°ì´íŠ¸(Y->N)
 		libService.bookStatusUpdate(bookCode);
 		return "redirect:deletebook";
 	}
 	
-	//È¸¿ø ¸ñ·Ï °¡Á®¿À±â(È¸ºñ ¾È³½ È¸¿ø)
+	//íšŒì› ëª©ë¡ ê°€ì ¸ì˜¤ê¸°(íšŒë¹„ ì•ˆë‚¸ íšŒì›)
 	@RequestMapping(value="/approval")
 	public String selectMember(Model model){
 		List<Member> list = libService.selectMember();
@@ -144,53 +144,53 @@ public class LibController {
 		logger.info(list.toString());
 		return "ApprovalMember";
 	}
-	//È¸¿ø ¸ñ·Ï ¾÷µ¥ÀÌÆ®(È¸ºñ ³¿)
+	//íšŒì› ëª©ë¡ ì—…ë°ì´íŠ¸(íšŒë¹„ ëƒ„)
 	@RequestMapping(value="/approval", method=RequestMethod.POST)
 	public String updatePayMember(@RequestParam(value="memberId") String[] memberId){
 		libService.updatePayMember(memberId);
 		return "redirect:approval";
 	}
 	
-	//µµ¼­ Ãß°¡ Æû ÀÌµ¿
+	//ë„ì„œ ì¶”ê°€ í¼ ì´ë™
 	@RequestMapping(value="/addbook")
 	public String addBook(){
 		return "AddBook";
 	}
 	
-	//µµ¼­ Ãß°¡ Æû ¾×¼Ç
+	//ë„ì„œ ì¶”ê°€ í¼ ì•¡ì…˜
 	@RequestMapping(value="/addbook", method=RequestMethod.POST)
 	public String addBook(Books books){
 		libService.insertBook(books);
 		return "AddBook";
 	}
 	
-	//µµ¼­°ü µî·Ï Æû ÀÌµ¿
+	//ë„ì„œê´€ ë“±ë¡ í¼ ì´ë™
 	@RequestMapping(value="/addlib")
 	public String addLib(){
 		return "AddLibrary";
 	}
 	
-	//µµ¼­°ü µî·Ï ¾×¼Ç
+	//ë„ì„œê´€ ë“±ë¡ ì•¡ì…˜
 	@RequestMapping(value="/addlib", method=RequestMethod.POST)
 	public String addLib(Lib lib){
 		libService.insertLib(lib);
 		return "AddLibrary";
 	}
 	
-	//·Î±×ÀÎ Æû ÀÌµ¿
+	//ë¡œê·¸ì¸ í¼ ì´ë™
 	@RequestMapping(value="/login")
 	public String login(){
 		return "login";
 	}
 	
-	//·Î±×ÀÎ ¾×¼Ç
+	//ë¡œê·¸ì¸ ì•¡ì…˜
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(Admin admin, HttpSession session){
 		logger.info(admin.toString());
 		String result="";
 		Admin resultAdmin = libService.selectAdmin(admin);
 		logger.info(resultAdmin.toString());
-		//¸®ÅÏ°ª 1: ¼º°ø, 2: ºñ¹øºÒÀÏÄ¡, 3: ¾ÆÀÌµğ ºÒÀÏÄ¡
+		//ë¦¬í„´ê°’ 1: ì„±ê³µ, 2: ë¹„ë²ˆë¶ˆì¼ì¹˜, 3: ì•„ì´ë”” ë¶ˆì¼ì¹˜
 		if(resultAdmin.getResult()==1){
 			session.setAttribute("adminId", resultAdmin.getAdminId());
 			session.setAttribute("libCode", resultAdmin.getLibCode());
@@ -204,24 +204,24 @@ public class LibController {
 		
 	}
 	
-	//·Î±×¾Æ¿ô
+	//ë¡œê·¸ì•„ì›ƒ
 	@RequestMapping(value="/logout")
 	public String logoutAction(HttpSession session){
 		session.invalidate();
 		return "login";
 	}
 	
-	//index·Î ÀÌµ¿(È¸¿ø°¡ÀÔ)
+	//indexë¡œ ì´ë™(íšŒì›ê°€ì…)
 	@RequestMapping(value="/index")
 	public String index(Model model){
-		//µµ¼­°ü ¸ñ·Ï
+		//ë„ì„œê´€ ëª©ë¡
 		List<Lib> list= libService.selectLibrary();
 		model.addAttribute("library",list);
 		logger.info(list.toString());
 		return "index";
 	}
 	
-	//È¸¿ø°¡ÀÔ ¾×¼Ç ÈÄ index·Î ÀÌµ¿
+	//íšŒì›ê°€ì… ì•¡ì…˜ í›„ indexë¡œ ì´ë™
 	@RequestMapping(value="/index", method=RequestMethod.POST)
 	public String inserMember(Member member){
 		libService.insertMember(member);

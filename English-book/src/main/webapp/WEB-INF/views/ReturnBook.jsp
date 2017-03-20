@@ -14,7 +14,7 @@
 	<div class="panel panel-default" style="width:60%" >
 		<div class="panel-heading" style="background-color:#2F2F2F;color:white" align="center">도서 반납</div>
 		<div class="panel-body">
-			<form action="/returnbook" method="post">
+			<form action="returnbook" method="post">
 				<table class="table" style="color:black; width:50%" align="center">
 					<tr>
 						<td>도서코드</td>
@@ -76,7 +76,7 @@
 $(document).ready(function(){
 	$("#selectbtn").click(function(){
 		$.ajax({
-			url : "/returnbookinfo",
+			url : "returnbookinfo",
 			type : "POST",
 			data : {"bookCode" : $('#bookCode').val()},
 			dateType : "json",
@@ -102,7 +102,7 @@ $(document).ready(function(){
 		})
 		
 		$.ajax({
-			url : "/returnpayinfo",
+			url : "returnpayinfo",
 			type : "POST",
 			data : {"bookCode" : $('#bookCode').val()},
 			dateType : "json",

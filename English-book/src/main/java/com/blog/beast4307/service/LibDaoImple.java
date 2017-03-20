@@ -13,88 +13,88 @@ public class LibDaoImple implements LibDao {
 	private SqlSessionTemplate sqlSession;
 	private final String NS="com.blog.beast4307.service.LibMapper.";
 	
-	//È¸¿ø°¡ÀÔ
+	//íšŒì›ê°€ì…
 	@Override
 	public int insertMember(Member member) {
 				
 		return sqlSession.insert(NS+"memberInsert",member);
 	}
 
-	//µµ¼­°ü µî·Ï
+	//ë„ì„œê´€ ë“±ë¡
 	@Override
 	public int insertLib(Lib lib) {
 
 		return sqlSession.insert(NS+"libraryInsert",lib);
 	}
 	
-	//µµ¼­ µî·Ï
+	//ë„ì„œ ë“±ë¡
 	@Override
 	public int insertBook(Books books) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(NS+"bookInsert",books);
 	}
 
-	//È¸¿ø¸ñ·Ï °¡Á®¿À±â(ÀÔ±İ È®ÀÎ)
+	//íšŒì›ëª©ë¡ ê°€ì ¸ì˜¤ê¸°(ì…ê¸ˆ í™•ì¸)
 	@Override
 	public List<Member> selectMember() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(NS+"memberSelect");
 	}
 
-	//ÀÔ±İ È®ÀÎ ÈÄ ÀÔ±İ»óÅÂ ¾÷µ¥ÀÌÆ®
+	//ì…ê¸ˆ í™•ì¸ í›„ ì…ê¸ˆìƒíƒœ ì—…ë°ì´íŠ¸
 	@Override
 	public int updatePayMember(String memberId) {
 		// TODO Auto-generated method stub
 		return sqlSession.update(NS+"memberPayUpdate", memberId);
 	}
 
-	//µµ¼­°ü ¸ñ·Ï °¡Á®¿À±â
+	//ë„ì„œê´€ ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<Lib> selectLib() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(NS+"librarySelect");
 	}
 
-	//AdminÁ¤º¸ °¡Á®¿À±â
+	//Adminì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Admin selectAdmin(String adminId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NS+"adminSelect",adminId);
 	}
-	//rent ¸â¹ö Á¤º¸ °¡Á®¿À±â
+	//rent ë©¤ë²„ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Member rentMemberSelect(String memberId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NS+"rentMemberSelect",memberId);
 	}
 
-	//rent µµ¼­ Á¤º¸ °¡Á®¿À±â
+	//rent ë„ì„œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Books rentBookSelect(int bookCode) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NS+"rentBookSelect",bookCode);
 	}
-	//µµ¼­ Æó±â µî·Ï
+	//ë„ì„œ íê¸° ë“±ë¡
 	@Override
 	public int discardInsert(Books books) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(NS+"discardInsert",books);
 	}
-	//µµ¼­ Æó±â µî·Ï ÈÄ µµ¼­»óÅÂ ¾÷µ¥ÀÌÆ®
+	//ë„ì„œ íê¸° ë“±ë¡ í›„ ë„ì„œìƒíƒœ ì—…ë°ì´íŠ¸
 	@Override
 	public int bookStatusUpdate(int bookCode) {
 		// TODO Auto-generated method stub
 		return sqlSession.update(NS+"bookStatusUpdate",bookCode);
 	}
 
-	//È¸¿ø/ºñÈ¸¿ø °¡°İÁ¤º¸ °¡Á®¿À±â
+	//íšŒì›/ë¹„íšŒì› ê°€ê²©ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Cost costSelect() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NS+"paymentSelecet");
 	}
 
-	//´ë¿©Á¤º¸ µî·Ï
+	//ëŒ€ì—¬ì •ë³´ ë“±ë¡
 	@Override
 	public int rentalInsert(Rental rental) {
 		System.out.println("dao rental : "+rental);
@@ -102,40 +102,40 @@ public class LibDaoImple implements LibDao {
 		return result;
 	}
 	
-	//°áÁ¦Á¤º¸ µî·Ï
+	//ê²°ì œì •ë³´ ë“±ë¡
 	@Override
 	public int paymentInsert(Payment payment) {
 		System.out.println("dao payment : "+payment);
 		// TODO Auto-generated method stub
 		return sqlSession.insert(NS+"paymentInsert", payment);
 	}
-	//¹İ³³ µµ¼­ Á¤º¸ °¡Á®¿À±â
+	//ë°˜ë‚© ë„ì„œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Books returnBookSelect(int bookCode) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NS+"returnbookSelect",bookCode);
 	}
-	//¹İ³³ °áÁ¦ Á¤º¸ °¡Á®¿À±â
+	//ë°˜ë‚© ê²°ì œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Payment returnPaymentSelect(int bookCode) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NS+"paymentInfoSelect",bookCode);
 	}
-	//°áÀç ÈÄ payment/rental ¾÷µ¥ÀÌÆ® 
+	//ê²°ì¬ í›„ payment/rental ì—…ë°ì´íŠ¸ 
 	@Override
 	public int payRentUpdate(int paymentCode) {
 		// TODO Auto-generated method stub
 		return sqlSession.update(NS+"payRentUpdate",paymentCode);
 	}
 	
-	//FIRSTRENTALDAY°¡Á®¿À±â
+	//FIRSTRENTALDAYê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Books firstRentalSelect(int bookCode) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NS+"booksInfoSelect",bookCode);
 	}
 
-	//°áÀçÈÄ books ¾÷µ¥ÀÌÆ®
+	//ê²°ì¬í›„ books ì—…ë°ì´íŠ¸
 	@Override
 	public int returnBookUpdate(Books books) {
 		// TODO Auto-generated method stub

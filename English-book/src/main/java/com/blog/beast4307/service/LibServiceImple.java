@@ -1,9 +1,5 @@
 package com.blog.beast4307.service;
 
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,10 +8,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,41 +17,41 @@ public class LibServiceImple implements LibService {
 	@Autowired
 	private LibDao dao;
 	
-	//È¸¿ø°¡ÀÔ
+	//íšŒì›ê°€ì…
 	@Override
 	public int insertMember(Member member) {
-		//ÀüÈ­¹øÈ£ ÀÔ·Â : ¼¼°³ÀÇ ÀÔ·ÂÆûÀ¸·Î ¹ŞÀº ¹øÈ£¸¦ ÇÏ³ª·Î ÇÕÄ§
+		//ì „í™”ë²ˆí˜¸ ì…ë ¥ : ì„¸ê°œì˜ ì…ë ¥í¼ìœ¼ë¡œ ë°›ì€ ë²ˆí˜¸ë¥¼ í•˜ë‚˜ë¡œ í•©ì¹¨
 		member.setMemberPhone(member.getPhone1()+member.getPhone2()+member.getPhone3());
-		//È¸ºñ ³³ºÎ ¿©ºÎ : °¡ÀÔÇÏ¸é NÀ¸·Î ÃÊ±âÈ­ ÇÏ°í ÀÔ±İ È®ÀÎ ÈÄ Y·Î º¯°æ
+		//íšŒë¹„ ë‚©ë¶€ ì—¬ë¶€ : ê°€ì…í•˜ë©´ Nìœ¼ë¡œ ì´ˆê¸°í™” í•˜ê³  ì…ê¸ˆ í™•ì¸ í›„ Yë¡œ ë³€ê²½
 		member.setMemberPaymentStatus('N');
-		//´ë¿©È½¼ö : °¡ÀÔ½Ã 0À¸·Î ÃÊ±âÈ­
+		//ëŒ€ì—¬íšŸìˆ˜ : ê°€ì…ì‹œ 0ìœ¼ë¡œ ì´ˆê¸°í™”
 		member.setRentalCount(0);
 		return dao.insertMember(member);
 	}
 	
-	//µµ¼­°üµî·Ï
+	//ë„ì„œê´€ë“±ë¡
 	@Override
 	public int insertLib(Lib lib) {
 
 		return dao.insertLib(lib);
 	}
 	
-	//µµ¼­ Ãß°¡
+	//ë„ì„œ ì¶”ê°€
 	@Override
 	public int insertBook(Books books) {
-		//µµ¼­°ü ÄÚµå Ãß°¡->¼¼¼Ç Ãß°¡ ÈÄ ¼öÁ¤ÇÒ°Í
+		//ë„ì„œê´€ ì½”ë“œ ì¶”ê°€->ì„¸ì…˜ ì¶”ê°€ í›„ ìˆ˜ì •í• ê²ƒ
 		books.setLibCode(0001);
-		//´ëÃâ°¡´É¿©ºÎ ¼³Á¤ : µµ¼­µî·Ï ÇÏ¸é ¹Ù·Î ºô¸±¼ö ÀÖÀ½
+		//ëŒ€ì¶œê°€ëŠ¥ì—¬ë¶€ ì„¤ì • : ë„ì„œë“±ë¡ í•˜ë©´ ë°”ë¡œ ë¹Œë¦´ìˆ˜ ìˆìŒ
 		books.setCurrentStatus("Y");
-		//´ë¿©È½¼ö : Ã³À½ µî·ÏÀÌ±â¿¡ 0À¸·Î ÃÊ±âÈ­
+		//ëŒ€ì—¬íšŸìˆ˜ : ì²˜ìŒ ë“±ë¡ì´ê¸°ì— 0ìœ¼ë¡œ ì´ˆê¸°í™”
 		books.setRentalCount(0);
-		//´ë¿©³¯Â¥ : Ã³À½ µî·ÏÀÌ±â¿¡ 0À¸·Î ÃÊ±âÈ­
+		//ëŒ€ì—¬ë‚ ì§œ : ì²˜ìŒ ë“±ë¡ì´ê¸°ì— 0ìœ¼ë¡œ ì´ˆê¸°í™”
 		books.setRentalDays(0);
 		
 		return dao.insertBook(books);
 	}
 
-	//¸â¹ö ¸ñ·Ï(ºñ½ÂÀÎ)°¡Á®¿À±â
+	//ë©¤ë²„ ëª©ë¡(ë¹„ìŠ¹ì¸)ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<Member> selectMember() {
 		List<Member> list =dao.selectMember();
@@ -72,7 +64,7 @@ public class LibServiceImple implements LibService {
 		return list;
 	}
 
-	//È¸¿ø »óÅÂ ¾÷µ¥ÀÌÆ®(È¸ºñ È®ÀÎ ÈÄ ½ÂÀÎ)
+	//íšŒì› ìƒíƒœ ì—…ë°ì´íŠ¸(íšŒë¹„ í™•ì¸ í›„ ìŠ¹ì¸)
 	@Override
 	public int updatePayMember(String[] memberId) {
 		int result=0;
@@ -83,23 +75,23 @@ public class LibServiceImple implements LibService {
 		return result;
 	}
 
-	//µµ¼­°ü ¸ñ·Ï °¡Á®¿À±â
+	//ë„ì„œê´€ ëª©ë¡ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<Lib> selectLibrary() {
 		// TODO Auto-generated method stub
 		return dao.selectLib();
 	}
 	
-	//Admin Á¤º¸°¡Á®¿À±â & ¾ÆÀÌµğ ºñ¹øÃ¼Å©
+	//Admin ì •ë³´ê°€ì ¸ì˜¤ê¸° & ì•„ì´ë”” ë¹„ë²ˆì²´í¬
 	@Override
 	public Admin selectAdmin(Admin admin) {
 		logger.info(admin.toString());
 		Admin returnAdmin = new Admin();
-		//ÀÔ·Â ¾ÆÀÌµğ ºñ¹ø
+		//ì…ë ¥ ì•„ì´ë”” ë¹„ë²ˆ
 		String loginId = admin.getAdminId();
 		String loginPw = admin.getAdminPw();
-		System.out.println("ÀÔ·Â ¾ÆÀÌµğ : "+ loginId+"ÀÔ·Â ºñ¹ø: "+loginPw);
-		//db¿¡¼­ °¡Á®¿À±â
+		System.out.println("ì…ë ¥ ì•„ì´ë”” : "+ loginId+"ì…ë ¥ ë¹„ë²ˆ: "+loginPw);
+		//dbì—ì„œ ê°€ì ¸ì˜¤ê¸°
 		Admin getAdmin = dao.selectAdmin(loginId);
 		String dbId = getAdmin.getAdminId();
 		String dbPw = getAdmin.getAdminPw();
@@ -107,7 +99,7 @@ public class LibServiceImple implements LibService {
 		logger.info(getAdmin.toString());
 		if(dbId.equals(loginId)){
 			if(dbPw.equals(loginPw)){
-				//¾ÆÀÌµğ ºñ¹ø °°À¸¸é ¸®ÅÏÇÒ º¯¼ö¿¡ adminÁ¤º¸ ¼ÂÆÃ
+				//ì•„ì´ë”” ë¹„ë²ˆ ê°™ìœ¼ë©´ ë¦¬í„´í•  ë³€ìˆ˜ì— adminì •ë³´ ì…‹íŒ…
 				returnAdmin.setAdminId(dbId);
 				returnAdmin.setLibCode(libCode);
 				returnAdmin.setResult(1);
@@ -120,18 +112,18 @@ public class LibServiceImple implements LibService {
 
 		return returnAdmin;
 	}
-	//rent ¸â¹ö Á¤º¸ °¡Á®¿À±â
+	//rent ë©¤ë²„ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Member rentMemberSelect(String memberId) {
 		// TODO Auto-generated method stub
 		return dao.rentMemberSelect(memberId);
 	}
-	//rent µµ¼­ Á¤º¸ °¡Á®¿À±â
+	//rent ë„ì„œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Books rentBookSelect(int bookCode) {
 		
 		Books returnBooks = dao.rentBookSelect(bookCode);
-		//´ë¿©½ÃÀÛÀÏ : ÇöÀçÀÇ ³¯Â¥
+		//ëŒ€ì—¬ì‹œì‘ì¼ : í˜„ì¬ì˜ ë‚ ì§œ
 		int nYear;
 		int nMonth;
 		int nDay;
@@ -143,7 +135,7 @@ public class LibServiceImple implements LibService {
 		    
 		    returnBooks.setRentalStartDay(nowDate);
 		    
-		//´ë¿© Á¾·áÀÏ : ÇöÀç ³¯Â¥ +3
+		//ëŒ€ì—¬ ì¢…ë£Œì¼ : í˜„ì¬ ë‚ ì§œ +3
 			calendar.add(Calendar.DAY_OF_MONTH, 3);
 			nYear = calendar.get(Calendar.YEAR);
 			nMonth = calendar.get(Calendar.MONTH) + 1;
@@ -154,21 +146,21 @@ public class LibServiceImple implements LibService {
 		
 		return returnBooks;
 	}
-	//µµ¼­ Æó±â µî·Ï
+	//ë„ì„œ íê¸° ë“±ë¡
 	@Override
 	public int discardInsert(Books books) {
 		// TODO Auto-generated method stub
 		return dao.discardInsert(books);
 	}
 	
-	//µµ¼­ Æó±â ÈÄ µµ¼­ ¾÷µ¥ÀÌÆ®
+	//ë„ì„œ íê¸° í›„ ë„ì„œ ì—…ë°ì´íŠ¸
 	@Override
 	public int bookStatusUpdate(int bookCode) {
 		// TODO Auto-generated method stub
 		return dao.bookStatusUpdate(bookCode);
 	}
 
-	//È¸¿ø/ºñÈ¸¿ø °¡°İÁ¤º¸ °¡Á®¿À±â
+	//íšŒì›/ë¹„íšŒì› ê°€ê²©ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Cost costSelect() {
 		// TODO Auto-generated method stub
@@ -176,7 +168,7 @@ public class LibServiceImple implements LibService {
 	}
 
 	Rental rental= new Rental();
-	//´ë¿©Á¤º¸ µî·Ï
+	//ëŒ€ì—¬ì •ë³´ ë“±ë¡
 	@Override
 	public int rentalInsert(ReceiveRentData receiveRentData) {
 		
@@ -189,7 +181,7 @@ public class LibServiceImple implements LibService {
 		return dao.rentalInsert(rental);
 	}
 
-	//°áÁ¦Á¤º¸ µî·Ï
+	//ê²°ì œì •ë³´ ë“±ë¡
 	@Override
 	public int paymentInsert(ReceiveRentData receiveRentData) {
 		Payment payment = new Payment();
@@ -205,50 +197,50 @@ public class LibServiceImple implements LibService {
 		return dao.paymentInsert(payment);
 	}
 	
-	//¹İ³³µµ¼­Á¤º¸ °¡Á®¿À±â
+	//ë°˜ë‚©ë„ì„œì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Books returnBookSelect(int bookCode) throws ParseException {
 		System.out.println("Serviceimpl bookCode : "+bookCode);
 		Books returnBook = dao.returnBookSelect(bookCode);
 		logger.info("enter : "+returnBook.toString());
 		
-		//ºô¸°³¯Â¥ °è»ê
-		String rentalStartDay = returnBook.getRentalStartDay();				//rental½ÃÀÛÀÏ
-		String rentalFinishDay = returnBook.getReturnExpectDay();			//rental¹İ³³ÀÏ
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");	//yyyy-MM-dd Çü½ÄÀÇ simpleDateFormat »ı¼º	
+		//ë¹Œë¦°ë‚ ì§œ ê³„ì‚°
+		String rentalStartDay = returnBook.getRentalStartDay();				//rentalì‹œì‘ì¼
+		String rentalFinishDay = returnBook.getReturnExpectDay();			//rentalë°˜ë‚©ì¼
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");	//yyyy-MM-dd í˜•ì‹ì˜ simpleDateFormat ìƒì„±	
 		 
-	    Date beginDate = formatter.parse(rentalStartDay);					//String Çü½ÄÀÇ ³¯Â¥¸¦ Date Çü½ÄÀ¸·Î º¯È¯
+	    Date beginDate = formatter.parse(rentalStartDay);					//String í˜•ì‹ì˜ ë‚ ì§œë¥¼ Date í˜•ì‹ìœ¼ë¡œ ë³€í™˜
 	    Date endDate = formatter.parse(rentalFinishDay);
 	 
-	    long diff = endDate.getTime() - beginDate.getTime();				//DateÇü½ÄÀÇ ³¯Â¥¸¦ ÃÊ·Î ±¸ÇÑ ÈÄ -> ¹İ³³ÀÏ°ú ½ÃÀÛÀÏÀÇ Â÷¸¦ ±¸ÇÔ
-	    int diffDays = (int)(diff / (24 * 60 * 60 * 1000));					//°è»êÇÑ °á°ú(ÃÊ)¸¦ ³¯Â¥·Î ¹Ù²Ù¾îÁÜ
+	    long diff = endDate.getTime() - beginDate.getTime();				//Dateí˜•ì‹ì˜ ë‚ ì§œë¥¼ ì´ˆë¡œ êµ¬í•œ í›„ -> ë°˜ë‚©ì¼ê³¼ ì‹œì‘ì¼ì˜ ì°¨ë¥¼ êµ¬í•¨
+	    int diffDays = (int)(diff / (24 * 60 * 60 * 1000));					//ê³„ì‚°í•œ ê²°ê³¼(ì´ˆ)ë¥¼ ë‚ ì§œë¡œ ë°”ê¾¸ì–´ì¤Œ
 	 
 	    System.out.println("diffDays == RentalDays : "+diffDays);
 	    returnBook.setRentalDays(diffDays);
 		logger.info("exit : "+returnBook.toString());
 		return returnBook;
 	}
-	//¹İ³³ °áÁ¦ Á¤º¸ °¡Á®¿À±â
+	//ë°˜ë‚© ê²°ì œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public Payment returnPaymentSelect(int bookCode) {
 		
 		return dao.returnPaymentSelect(bookCode);
 	}
-	//°áÀç ÈÄ payment/rental ¾÷µ¥ÀÌÆ® 
+	//ê²°ì¬ í›„ payment/rental ì—…ë°ì´íŠ¸ 
 	@Override
 	public int payRentUpdate(int paymentCode) {
 		// TODO Auto-generated method stub
 		return dao.payRentUpdate(paymentCode);
 	}
 
-	//°áÀçÈÄ books ¾÷µ¥ÀÌÆ®
+	//ê²°ì¬í›„ books ì—…ë°ì´íŠ¸
 	@Override
 	public int returnBookUpdate(ReceiveRentData receiveRentData) {
-		//Ã¹ ´ë¿© ³¯Â¥ Á¤º¸ °¡Á®¿À±â
+		//ì²« ëŒ€ì—¬ ë‚ ì§œ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 		Books firstRental=dao.firstRentalSelect(receiveRentData.getBookCode());
 		Books returnBooks = new Books();
 		
-		//returnBook¿¡ ´Ù½Ã ¼ÂÆÃ
+		//returnBookì— ë‹¤ì‹œ ì…‹íŒ…
 		returnBooks.setBookCode(receiveRentData.getBookCode());
 		returnBooks.setRentalDays(receiveRentData.getRentalDays());
 		if(firstRental.getFirstRentalDay()==null){

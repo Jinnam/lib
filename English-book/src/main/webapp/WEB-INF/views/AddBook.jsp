@@ -14,7 +14,7 @@
 		<div class="panel-heading" style="background-color:#2F2F2F;color:white" align="center">도서 등록</div>
 		<div class="panel-body" align="center">
 			
-			<form action="/addbook" method="post">
+			<form action="addbook" method="post">
 				<table class="table" style="color:black; width:50%" align="center">
 					<tr>
 						<td>도서관</td>
