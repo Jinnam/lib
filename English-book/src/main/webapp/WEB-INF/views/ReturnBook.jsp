@@ -18,7 +18,7 @@
 				<table class="table" style="color:black; width:50%" align="center">
 					<tr>
 						<td>도서코드</td>
-						<td><input type="text" name="bookCode" id="bookCode"/>&ensp;
+						<td><input type="text" name="bookCode" id="bookCode" value="100000010"/>&ensp;
 							<input type="button" id="selectbtn" value="조회" class="btn btn-default">
 							<input type="hidden" id="paymentCode" name="paymentCode"/>
 						</td>

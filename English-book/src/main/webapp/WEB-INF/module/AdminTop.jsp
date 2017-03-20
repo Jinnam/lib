@@ -25,7 +25,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>                        
 			</button>
-		<a class="navbar-brand" href="/rentbook">JB-LIBRARY</a>
+		<a class="navbar-brand" href="rentbook">JB-LIBRARY</a>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav navbar-right">
@@ -34,7 +34,7 @@
 					도서관관리 <span class="caret"></span>
 					 </a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="/addlib">도서관등록</a></li>
+							<li><a href="addlib">도서관등록</a></li>
 					    </ul>
 				</li>
 				<li role="presentation" class="dropdown">
@@ -42,8 +42,8 @@
 					도서관리 <span class="caret"></span>
 					 </a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="/addbook">도서등록</a></li>
-							<li><a href="/deletebook">도서폐기</a></li>
+							<li><a href="addbook">도서등록</a></li>
+							<li><a href="deletebook">도서폐기</a></li>
 					    </ul>
 				</li>
 				<li role="presentation" class="dropdown">
@@ -51,8 +51,8 @@
 					대여/반납<span class="caret"></span>
 					 </a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="/rentbook">도서대여</a></li>
-							<li><a href="/returnbook">도서반납</a></li>
+							<li><a href="rentbook">도서대여</a></li>
+							<li><a href="returnbook">도서반납</a></li>
 					    </ul>
 				</li>
 				
@@ -61,10 +61,10 @@
 					회원관리 <span class="caret"></span>
 					 </a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="/approval">회비납부</a></li>
+							<li><a href="approval">회비납부</a></li>
 					    </ul>
 				</li>
-				<li><a href="/logout">${adminId} 로그아웃</a></li>
+				<li><a href="logout">${adminId} 로그아웃</a></li>
 			</ul>
 		</div>
 	</div>

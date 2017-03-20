@@ -57,7 +57,7 @@
 <jsp:include page="/WEB-INF/module/MemberTop.jsp"/>
 <!-- Header -->
     <header>
-    <p align="right"><a class="btn btn-warning btn-lg" href="/login">관리자 로그인</a></p>
+    <p align="right"><a class="btn btn-warning btn-lg" href="login">관리자 로그인</a></p>
         <div id="mainbody" align="center">
         	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                 <div class="intro-lead-in">꿈과 사랑이 가득한</div>

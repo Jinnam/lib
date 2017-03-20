@@ -20,7 +20,7 @@
 					<table style="color: black; width: 60%" align="center">
 						<tr>
 							<td>회원아이디</td>
-							<td><input class="membertable" type="text" name="memberId"
+							<td><input class="membertable" type="text" name="memberId" value="id001"
 								id="memberId" /> <input type="button" value="조회" id="memberBtn"
 								class="btn btn-default" /></td>
 						</tr>
@@ -53,7 +53,7 @@
 					<table style="color: black; width: 60%; align: center">
 						<tr>
 							<td>도서코드</td>
-							<td><input class="booktable" type="text" name="bookCode"
+							<td><input class="booktable" type="text" name="bookCode" value="100000003"
 								id="bookCode" /> <input type="button" value="조회"
 								class="btn btn-default" id="bookbtn" /></td>
 						</tr>
