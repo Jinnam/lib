@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	</center>
-	<div style="height:100px"></div>
+	<div style="height:150px"></div>
 	<jsp:include page="/WEB-INF/module/footer.jsp"/>
 </body>
 </html>

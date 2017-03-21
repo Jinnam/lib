@@ -9,7 +9,7 @@
 
 	<!-- First Container -->
 
-	<div style="height: 100px"></div>
+	<div style="height: 50px"></div>
 	<center>
 		<form action="rentbook" method="post">
 			<div class="panel panel-default" style="width: 40%" align="left">
@@ -121,7 +121,7 @@
 			</div>
 		</form>
 	</center>
-	<div style="height: 100px"></div>
+	<div style="height: 50px"></div>
 	<script>
 $(document).ready(function(){
 	$("#memberBtn").click(function(){

@@ -7,7 +7,7 @@
 <body>
 <jsp:include page="/WEB-INF/module/AdminTop.jsp"/>
 
-	<div style="height:200px"></div>
+	<div style="height:150px"></div>
 	
 <center>
 	<div class="panel panel-default" style="width:60%" >

@@ -8,7 +8,7 @@
 <body>
 <jsp:include page="/WEB-INF/module/AdminTop.jsp"/>
 
-	<div style="height:200px"></div>
+	<div style="height:100px"></div>
 
 <center>
 	<div class="panel panel-default" style="width:60%" >
@@ -64,7 +64,7 @@
 	</div>
 </center>
 
-	<div style="height:100px"></div>
+	<div style="height:50px"></div>
 <script>
 $(document).ready(function(){
 	$("#selectbtn").click(function(){

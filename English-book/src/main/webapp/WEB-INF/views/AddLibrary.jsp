@@ -7,7 +7,7 @@
 <body>
 <jsp:include page="/WEB-INF/module/AdminTop.jsp"/>
 
-	<div style="height:200px"></div>
+	<div style="height:220px"></div>
 	<center>
 	<div class="panel panel-default" style="width:60%" >
 		<div class="panel-heading" style="background-color:#2F2F2F;color:white" align="center">도서관 등록</div>
@@ -30,7 +30,7 @@
 		</div>
 	</div>
 	</center>
-	<div style="height:100px"></div>
+	<div style="height:220px"></div>
 
 <jsp:include page="/WEB-INF/module/footer.jsp"/>
 </body>
